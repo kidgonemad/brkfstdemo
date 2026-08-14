@@ -1,0 +1,203 @@
+{%- comment -%}
+  In-store Klaviyo popup — rendered from layout/theme.liquid so it appears on
+  every page BEHIND the password gate. Same markup snippet, same settings, and
+  the same localStorage key (brk_nl_v1) as the password page: a visitor who
+  already signed up or dismissed at the gate is never asked again inside.
+
+  Self-contained: the password page carries its own copy of these styles and
+  this script inline (it is layout none), so nothing here can double-load.
+{%- endcomment -%}
+
+{%- assign kl_key = settings.klaviyo_public_key | strip -%}
+
+{%- if settings.klaviyo_popup_enabled and kl_key != blank -%}
+<style>
+  @font-face{font-family:'Hubot Sans Condensed Bold';
+    src:url('{{ 'hubot-sans-condensed-bold.woff2' | asset_url }}') format('woff2');
+    font-weight:700;font-style:normal;font-display:swap}
+  .nl{--paper:#fdfdfd;--ink:#000;--brk-orange:#ff6600;
+    position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;
+    padding:1.5rem;font-family:'Hubot Sans Condensed Bold',Arial,sans-serif;font-weight:700}
+  .nl[hidden]{display:none}
+  .nl-veil{position:absolute;inset:0;background:rgba(0,0,0,.55);animation:nlfade .25s ease both}
+  @keyframes nlfade{from{opacity:0}to{opacity:1}}
+  .nl-panel{position:relative;color:var(--ink);width:min(92vw,430px);padding:2.1rem 1.9rem 1.7rem}
+  .nl-fill{position:absolute;inset:0;background:var(--paper);
+    box-shadow:0 18px 60px rgba(0,0,0,.35);animation:nlfill .18s ease .30s both}
+  @keyframes nlfill{from{opacity:0}to{opacity:1}}
+  .nl-frame{position:absolute;pointer-events:none;z-index:2;
+    animation:nlopen .40s cubic-bezier(.2,.85,.25,1) both}
+  @keyframes nlopen{from{inset:calc(50% - 30px) calc(50% - 30px)}to{inset:5px}}
+  .nl-c{position:absolute;width:19px;height:19px;border:0 solid var(--ink)}
+  .nl-c.tl{top:0;left:0;border-top-width:1px;border-left-width:1px}
+  .nl-c.tr{top:0;right:0;border-top-width:1px;border-right-width:1px}
+  .nl-c.bl{bottom:0;left:0;border-bottom-width:1px;border-left-width:1px}
+  .nl-c.br{bottom:0;right:0;border-bottom-width:1px;border-right-width:1px}
+  .nl-body{position:relative;z-index:1}
+  .nl-form,.nl-x{animation:nlfade .3s ease .62s both}
+  .nl-x{position:absolute;top:10px;right:10px;background:none;border:0;color:var(--ink);
+    cursor:pointer;padding:6px;line-height:0}
+  .nl-x:hover{color:var(--brk-orange)}
+  .nl-h{font-size:clamp(1.5rem,5vw,2rem);letter-spacing:.01em;text-transform:uppercase;margin:0;
+    background-image:linear-gradient(var(--brk-orange),var(--brk-orange));
+    background-repeat:no-repeat;background-size:0% 100%;background-position:left center;
+    display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:.05em .25em;
+    animation:brkhl .45s cubic-bezier(.25,.8,.3,1) .78s both}
+  @keyframes brkhl{from{background-size:0% 100%}to{background-size:100% 100%}}
+  .nl-b{font-size:.8rem;line-height:1.6;letter-spacing:.04em;text-transform:uppercase;
+    opacity:.72;margin:.95rem 0 1.25rem}
+  .nl-form{display:flex;flex-direction:column;gap:.55rem}
+  .nl-lab{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;opacity:.6}
+  .nl-in{font-family:inherit;font-weight:700;font-size:1rem;letter-spacing:.02em;
+    padding:.72rem .8rem;border:1px solid var(--ink);background:transparent;color:var(--ink);width:100%}
+  .nl-in::placeholder{color:var(--ink);opacity:.32;text-transform:none}
+  .nl-in:focus{outline:none;border-color:var(--brk-orange);box-shadow:inset 0 0 0 1px var(--brk-orange)}
+  .nl-in[aria-invalid="true"]{border-color:#c00;box-shadow:inset 0 0 0 1px #c00}
+  .nl-go{font-family:inherit;font-weight:800;font-size:.9rem;letter-spacing:.12em;
+    padding:.78rem 1rem;border:0;background:var(--brk-orange);color:var(--ink);cursor:pointer;
+    text-transform:uppercase;transition:filter .15s ease}
+  .nl-go:hover{filter:brightness(1.08)}
+  .nl-go[disabled]{opacity:.55;cursor:default}
+  .nl-msg{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;min-height:1em;margin:.15rem 0 0}
+  .nl-msg.err{color:#c00}
+  .nl-msg.ok{color:var(--ink);background:var(--brk-orange);display:inline-block;padding:.25em .5em}
+  @media(prefers-reduced-motion:reduce){
+    .nl-veil,.nl-fill,.nl-form,.nl-x{animation:none}
+    .nl-frame{animation:none;inset:5px}
+    .nl-h{animation:none;background-size:100% 100%}}
+</style>
+
+{% render 'brk-klaviyo-popup' %}
+
+<script>
+(function(){
+  var nl=document.getElementById('nl'); if(!nl) return;
+  var KEY=nl.dataset.key, LIST=nl.dataset.list;
+  var DELAY=(parseFloat(nl.dataset.delay)||0)*1000;
+  var SEEN='brk_nl_v1';
+  var REVISION='2024-10-15';
+
+  function seen(){ try{return localStorage.getItem(SEEN)==='1';}catch(e){return false;} }
+  function remember(){ try{localStorage.setItem(SEEN,'1');}catch(e){} }
+
+  var email=nl.querySelector('.nl-in');
+  var form=nl.querySelector('.nl-form');
+  var btn=nl.querySelector('.nl-go');
+  var msg=nl.querySelector('.nl-msg');
+  var lastFocus=null;
+
+  var GLYPH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\|<>#*+=-';
+  var reduce=false;
+  try{ reduce=matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
+  function scramble(el,dur,delay){
+    var full=el.dataset.text||(el.dataset.text=el.textContent);
+    if(reduce){ el.textContent=full; return; }
+    el.textContent='';
+    clearTimeout(el._brkSafe);
+    el._brkSafe=setTimeout(function(){ el.textContent=full; }, delay+dur+800);
+    var t0=null;
+    function frame(ts){
+      if(t0===null) t0=ts;
+      var p=(ts-t0-delay)/dur;
+      if(p<0){ requestAnimationFrame(frame); return; }
+      if(p>=1){ el.textContent=full; clearTimeout(el._brkSafe); return; }
+      var lit=Math.floor(full.length*p), out='';
+      for(var i=0;i<full.length;i++){
+        var c=full[i];
+        out+= (c===' '||c==='\n') ? c : (i<lit ? c : GLYPH[(Math.random()*GLYPH.length)|0]);
+      }
+      el.textContent=out;
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  function runIntro(){
+    Array.prototype.forEach.call(nl.querySelectorAll('[data-scramble]'),function(el,i){
+      scramble(el, i===0?460:430, i===0?400:520);
+    });
+  }
+
+  function open(){
+    if(!nl.hidden) return;
+    lastFocus=document.activeElement;
+    nl.hidden=false;
+    runIntro();
+    setTimeout(function(){ try{email.focus();}catch(e){} }, reduce?30:640);
+  }
+  function close(){
+    if(nl.hidden) return;
+    nl.hidden=true; remember();
+    try{ if(lastFocus&&lastFocus.focus&&lastFocus!==email) lastFocus.focus(); }catch(e){}
+  }
+
+  Array.prototype.forEach.call(nl.querySelectorAll('[data-nl-close]'),function(el){
+    el.addEventListener('click',close);
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!nl.hidden) close();
+  });
+  nl.addEventListener('keydown',function(e){
+    if(e.key!=='Tab') return;
+    var f=nl.querySelectorAll('button,input');
+    if(!f.length) return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus(); }
+  });
+
+  function say(text,cls){ msg.textContent=text; msg.className='nl-msg'+(cls?' '+cls:''); }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){
+      email.setAttribute('aria-invalid','true');
+      say('Enter a valid email address','err'); email.focus(); return;
+    }
+    email.removeAttribute('aria-invalid');
+    btn.disabled=true; say('Sending…');
+    var url,payload;
+    if(LIST){
+      url='https://a.klaviyo.com/client/subscriptions/?company_id='+encodeURIComponent(KEY);
+      payload={data:{type:'subscription',
+        attributes:{custom_source:'Store popup',
+          profile:{data:{type:'profile',attributes:{email:v}}}},
+        relationships:{list:{data:{type:'list',id:LIST}}}}};
+    }else{
+      url='https://a.klaviyo.com/client/profiles/?company_id='+encodeURIComponent(KEY);
+      payload={data:{type:'profile',attributes:{email:v}}};
+    }
+    fetch(url,{method:'POST',
+      headers:{'content-type':'application/json','revision':REVISION},
+      body:JSON.stringify(payload)
+    }).then(function(r){
+      if(r.status===202||r.ok){
+        say('You are in — check your inbox','ok');
+        form.querySelector('.nl-lab').hidden=true;
+        email.hidden=true; btn.hidden=true;
+        remember();
+        setTimeout(close,2200);
+      }else{
+        return r.text().then(function(t){
+          var detail=t;
+          try{var j=JSON.parse(t);
+            if(j.errors&&j.errors.length)
+              detail=j.errors.map(function(e){return e.detail||e.title||'';}).join(' | ');
+          }catch(_){}
+          var er=new Error(r.status+' '+detail); er.status=r.status; er.detail=detail; throw er;
+        });
+      }
+    }).catch(function(err){
+      btn.disabled=false;
+      say('Could not sign you up — try again','err');
+      if(window.console) console.warn('[BRKFST] Klaviyo subscribe failed:',err);
+    });
+  });
+
+  if(!seen()) setTimeout(open,DELAY);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-nl-open]'),function(el){
+    el.addEventListener('click',function(e){ e.preventDefault(); open(); });
+  });
+})();
+</script>
+{%- endif -%}

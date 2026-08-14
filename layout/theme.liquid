@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"{{ brk_html_attrs }}>
+<head>
+<script>window.BRK_SHOPIFY_THEME=1;
+/* show clean site URLs: /pages/gallery -> /gallery (the theme serves both) */
+if(location.pathname.indexOf('/pages/')===0){try{history.replaceState(null,'',location.pathname.replace('/pages/','/').replace(/^\/events-/,'/events/').replace(/^\/jobs-/,'/jobs/')+location.search+location.hash);}catch(e){}}
+/* brk_heal_v1: one-time per visitor - clears sticky repaint/editor state left by
+   earlier builds (colourway + retheme-panel keys, Webflow editor flag) and
+   unregisters any service worker from a previous deployment */
+try{if(localStorage.getItem('brk_heal_v1')!=='1'){
+  ['brk-theme','brk-store-theme','brk-elem-theme','brk-tp-hidden','brk-shop-layout','WebflowEditor']
+    .forEach(function(k){try{localStorage.removeItem(k)}catch(e){}});
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations)
+    navigator.serviceWorker.getRegistrations()
+      .then(function(rs){rs.forEach(function(r){r.unregister()})}).catch(function(){});
+  localStorage.setItem('brk_heal_v1','1');
+}}catch(e){}
+</script>
+{{ content_for_header }}
+{{ brk_head }}
+</head>
+<body{{ brk_body_attrs }}>
+{{ content_for_layout }}
+{% render 'brk-klaviyo-store-popup' %}
+</body>
+</html>

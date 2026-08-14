@@ -1,0 +1,1 @@
+{% render 'brk-shell-open' %}<h1 class="brk-stub-title">Login</h1>{% form 'customer_login' %}{{ form.errors | default_errors }}<input type="email" name="customer[email]" placeholder="Email"><input type="password" name="customer[password]" placeholder="Password"><button type="submit">LOG IN</button>{% endform %}{% render 'brk-shell-close' %}

@@ -1,0 +1,66 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "BRKFST",
+    "theme_version": "1.0.0",
+    "theme_author": "BRKFST",
+    "theme_documentation_url": "https://www.shopbrkfst.com",
+    "theme_support_url": "https://www.shopbrkfst.com"
+  },
+  {
+    "name": "Klaviyo",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Email capture — password page"
+      },
+      {
+        "type": "paragraph",
+        "content": "The popup only appears once BOTH fields below are filled in. If either is blank it stays hidden, so emails are never collected by a form that goes nowhere."
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_public_key",
+        "label": "Public API key (Site ID)",
+        "default": "TSwGJs",
+        "info": "Klaviyo → Settings → API keys → Public API key. Six characters. This key is designed to be visible in page source — never paste a Private key here."
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_list_id",
+        "label": "List ID",
+        "default": "R78Z7B",
+        "info": "From the list URL: klaviyo.com/list/<THIS>/settings. Leave blank and sign-ups still reach Klaviyo as profiles, but they are not subscribed to a list."
+      },
+      {
+        "type": "checkbox",
+        "id": "klaviyo_popup_enabled",
+        "label": "Show the popup",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "klaviyo_popup_delay",
+        "label": "Auto-open after",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "s",
+        "default": 6,
+        "info": "Shown once per visitor. A dismissal or a successful sign-up is remembered, so it will not nag on return visits."
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_popup_heading",
+        "label": "Heading",
+        "default": "JOIN THE X FORCE"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_popup_body",
+        "label": "Body copy",
+        "default": "Be the first through the door."
+      }
+    ]
+  }
+]

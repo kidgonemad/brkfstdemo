@@ -1,0 +1,823 @@
+<header class="Header">
+  <a class="Header-logo" href="/" aria-label="BRKFST — Home">
+    <svg viewBox="0 0 866 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="brkfst">
+      <path fill="#fff" fill-rule="evenodd" d="M62 0 314 0 337 4 347 9 353 17 353 28 349 38 335 52 316 62 292 69 315 77 323 84 325 88 325 100 321 110 309 123 307 123 303 127 278 137 256 140 153 140 155 134 161 127 162 123 166 119 173 106 232 106 249 105 261 101 265 95 265 92 258 87 186 85 188 84 189 80 191 79 203 59 209 54 272 53 284 47 286 42 285 38 277 35 37 35 56 3 62 0Z M93 46 135 46 135 49 133 50 130 57 122 67 121 71 113 81 112 85 104 95 103 99 95 109 94 113 86 123 85 127 76 138 71 140 29 139 29 137 65 85 73 70 81 60 84 53 93 46Z M155 46 196 46 196 48 194 49 193 53 187 60 186 64 182 68 181 72 175 79 174 83 168 90 167 94 161 101 160 105 154 112 153 116 149 120 148 124 146 125 138 139 90 140 90 137 104 118 105 114 121 92 122 88 138 66 145 53 150 48 155 46Z"/>
+      <text x="392" y="132" fill="#fff" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-weight="800" font-style="italic" font-size="182" letter-spacing="-9">brkfst</text>
+    </svg>
+  </a>
+
+  <nav class="Header-nav" aria-label="Primary">
+    <a class="NavItem" href="/products"><span class="label-swap"><span>PRODUCTS</span><span aria-hidden="true">PRODUCTS</span></span></a>
+    <a class="NavItem" href="/gallery"><span class="label-swap"><span>GALLERY</span><span aria-hidden="true">GALLERY</span></span></a>
+    <a class="NavItem" href="/about"><span class="label-swap"><span>MISSION</span><span aria-hidden="true">MISSION</span></span></a>
+    <a class="NavItem" href="/tobacco"><span class="label-swap"><span>TOBACCO</span><span aria-hidden="true">TOBACCO</span></span></a>
+    <a class="NavItem" href="/cannabis"><span class="label-swap"><span>CANNABIS</span><span aria-hidden="true">CANNABIS</span></span></a>
+  </nav>
+
+  <div class="Header-utils">
+    <button class="NavItem NavItem--plus" id="dirBtn" type="button" aria-expanded="false" aria-controls="directory">
+      Directory
+      <span class="plus-sign" aria-hidden="true"><span></span><span></span></span>
+    </button>
+  </div>
+
+  <div class="Directory" id="directory">
+    <div class="Directory-inner">
+      <div class="DirCol">
+        <p class="title mono">SHOP</p>
+        <a class="DirLink" href="/products?cat=new">New Arrivals</a>
+        <a class="DirLink" href="/products?cat=classics">Classics</a>
+        <a class="DirLink" href="/tobacco">Tobacco</a>
+        <a class="DirLink" href="/cannabis">Cannabis</a>
+        <a class="DirLink" href="/products">All Products</a>
+      </div>
+      
+      <div class="DirCol">
+        <p class="title mono">EVENTS</p>
+        <a class="DirLink" href="/events">All Events</a>
+      </div><div class="DirCol">
+        <p class="title mono">MEDIA</p>
+        <a class="DirLink" href="/gallery">Gallery</a>
+      </div>
+      <div class="DirCol">
+        <p class="title mono">COMPANY</p>
+        <a class="DirLink" href="/about">Mission</a>
+        <a class="DirLink" href="/contact">Contact</a>
+        <a class="DirLink" href="/delivery-returns">Delivery &amp; Returns</a>
+        <a class="DirLink" href="/jobs">Jobs</a>
+      </div>
+    </div>
+  </div>
+</header><div class="page-content"><div id="w-node-_4b04e540-fc1f-d498-415d-1c0856e65c64-56e65c64" class="global-styles w-embed"><style>
+  /* Desktop */
+  :root {
+    --size-unit: 16;
+    --size-container-ideal: 1440;
+    --size-container-min: 992px;
+    --size-container-max: 2560px;
+    --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+    --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+  }
+
+  /* Lock font size above 1680px */
+  /* EXAMPLE: 1920 / (1440 / 16) = 21.333333px */
+  @media screen and (min-width: 1921px) {
+    :root {
+      --size-font: 21.333333px;
+    }
+  }
+
+  /* Tablet */
+  @media screen and (max-width: 991px) {
+    :root {
+      --size-container-ideal: 834;
+      --size-container-min: 768px;
+      --size-container-max: 991px;
+    }
+  }
+
+  /* Mobile Landscape */
+  @media screen and (max-width: 767px) {
+    :root {
+      --size-container-ideal: 600;
+      --size-container-min: 480px;
+      --size-container-max: 767px;
+    }
+  }
+
+  /* Mobile Portrait */
+  @media screen and (max-width: 479px) {
+    :root {
+      --size-container-ideal: 390;
+      --size-container-min: 320px;
+      --size-container-max: 479px;
+    }
+  }
+
+  html {
+    scrollbar-gutter: stable;
+    background: #000;
+  }
+
+  body {
+    font-size: var(--size-font);
+  }
+
+  body {
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+
+  .container {
+    max-width: var(--size-container);
+  }
+
+  /* Get rid of top margin on first element in any rich text element */
+  .w-richtext > :not(div):first-child,
+  .w-richtext > div:first-child > :first-child {
+    margin-top: 0 !important;
+  }
+
+  /* Get rid of bottom margin on last element in any rich text element */
+  .w-richtext > :last-child,
+  .w-richtext ol li:last-child,
+  .w-richtext ul li:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /*Hide focus outline for main content element*/
+  main:focus-visible {
+    outline: -webkit-focus-ring-color auto 0px;
+  }
+
+  /*Reset selects, buttons, and links styles*/
+  .w-input,
+  .w-select,
+  a {
+    color: inherit;
+    text-decoration: inherit;
+    font-size: inherit;
+  }
+
+  /*Apply "..." after 3 lines of text */
+  .text-style-3lines {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  /* Apply "..." after 2 lines of text */
+  .text-style-2lines {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* Apply "..." after 1 lines of text */
+  .text-style-1lines {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+
+  .swiper {
+    cursor: grab;
+    overflow: visible;
+  }
+
+  .swiper:active {
+    cursor: grabbing;
+  }
+</style>
+
+<style>
+  :is([class*='heading-'], h1, h2, h3, h4, h5, h6) {
+    display: flow-root;
+  }
+  :is([class*='heading-'], h1, h2, h3, h4, h5, h6)::before {
+    content: '';
+    display: table;
+    margin-bottom: calc(-0.5lh + 0.38em);
+  }
+  :is([class*='heading-'], h1, h2, h3, h4, h5, h6)::after {
+    content: '';
+    display: table;
+    margin-bottom: calc(-0.5lh + 0.37em);
+  }
+</style>
+
+<style>
+  :is([class*='text-style-'], p, blockquote, .text-style-tag-regular) {
+    display: flow-root;
+  }
+  :is([class*='text-style-'], p, blockquote, .text-style-tag-regular)::before {
+    content: '';
+    display: table;
+    margin-bottom: calc(-0.5lh + 0.55em);
+  }
+  :is([class*='text-style-'], p, blockquote, .text-style-tag-regular)::after {
+    content: '';
+    display: table;
+    margin-bottom: calc(-0.5lh + 0.55em);
+  }
+</style>
+
+<style>
+  /* Animate Accordion Bottom Grid */
+  .accordion-css__item-bottom {
+    transition: grid-template-rows 0.6s cubic-bezier(0.625, 0.05, 0, 1);
+  }
+
+  [data-accordion-status='active'] .accordion-css__item-bottom {
+    grid-template-rows: 1fr;
+  }
+
+  /* Animate Icon */
+  .accordion_icon_line.is-2 {
+    transition: transform 0.6s cubic-bezier(0.625, 0.05, 0, 1);
+  }
+
+  [data-accordion-status='active'] .accordion_icon_line.is-2 {
+    transform: rotate(180deg);
+  }
+</style>
+
+<style>
+  .menu {
+    transform-origin: 100% 0%;
+    will-change: transform;
+  }
+  .menu_wrapper.is-open {
+    pointer-events: auto;
+  }
+</style>
+
+<style>
+  .nav_link_wrapper.w--current .tag_icon {
+    background-color: #00deff;
+    isolation: isolate;
+    position: relative;
+    z-index: 1;
+  }
+</style></div><div class="marker-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 19" fill="none" class="marker-overlay_icon is-center-right"><rect x="10" width="10" height="0.999998" transform="rotate(90 10 0)" fill="currentColor" STYLE="mix-blend-mode:difference"></rect><rect x="10" y="9" width="10" height="0.999998" transform="rotate(90 10 9)" fill="currentColor" STYLE="mix-blend-mode:difference"></rect><rect y="9" width="10" height="0.999999" fill="currentColor" STYLE="mix-blend-mode:difference"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 19" fill="none" class="marker-overlay_icon is-center-left"><rect y="19" width="10" height="0.999998" transform="rotate(-90 0 19)" fill="currentColor" STYLE="mix-blend-mode:difference"></rect><rect y="10" width="10" height="0.999998" transform="rotate(-90 0 10)" fill="currentColor" STYLE="mix-blend-mode:difference"></rect><rect x="10" y="10" width="10" height="0.999999" transform="rotate(180 10 10)" fill="currentColor" STYLE="mix-blend-mode:difference"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="marker-overlay_icon is-top-right"><path d="M10 0V10H9V1H0V0H10Z" fill="currentColor" STYLE="mix-blend-mode:difference"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="marker-overlay_icon is-top-left"><path d="M10 0V1H1V10H0V0H10Z" fill="currentColor" STYLE="mix-blend-mode:difference"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="marker-overlay_icon is-bottom-right"><path d="M10 10L-4.37114e-07 10L-3.93402e-07 9L9 9L9 -4.37114e-08L10 0L10 10Z" fill="currentColor" STYLE="mix-blend-mode:difference"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="marker-overlay_icon is-bottom-left"><path d="M-4.37116e-07 0L1 -4.37114e-08L1 9L10 9L10 10L0 10L-4.37116e-07 0Z" fill="currentColor" STYLE="mix-blend-mode:difference"></path></svg></div><nav class="navbar"><div class="container"><div class="padding-global padding-section-nav"><div class="nav_wrapper"><div class="grid-global"><div id="w-node-ab603c1d-f6ab-a13d-844d-6177c58b6e7f-c58b6e7a" class="nav_logo_wrapper"><a href="/" class="nav_logo-link w-inline-block"><img class="nav_logo" src="{{ 'brkfst-merch_brkfst-logo-white.png' | asset_url }}" alt="brkfst" style="height:2.4rem;width:auto;display:block;mix-blend-mode:normal;"/></a></div><div id="w-node-ab603c1d-f6ab-a13d-844d-6177c58b6e8a-c58b6e7a" class="nav_navigation_wrapper"><div class="nav_navigation_list"><a data-scramble-color="#00deff" data-scramble-hover="link" href="/products" aria-current="page" class="nav_link_wrapper w-inline-block w--current"><div class="tag_icon is-white"></div><div data-scramble-hover="target" class="text-style-tag-regular">Shop</div></a></div><div class="nav_navigation_list"><a data-scramble-color="#00deff" data-scramble-hover="link" href="/gallery" class="nav_link_wrapper w-inline-block"><div class="tag_icon is-white"></div><div data-scramble-hover="target" class="text-style-tag-regular">Gallery</div></a></div><div class="nav_navigation_list"><a data-scramble-color="#00deff" data-scramble-hover="link" href="/about" class="nav_link_wrapper w-inline-block"><div class="tag_icon is-white"></div><div data-scramble-hover="target" class="text-style-tag-regular">About</div></a></div><div class="nav_navigation_list"></div></div></div></div></div></div><div class="cl_event-count w-dyn-list"><div data-event-count-list="" role="list" class="w-dyn-items"><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div><div role="listitem" class="w-dyn-item"></div></div></div></nav><div data-menu-button="open" class="menu-button"><div data-wf--component---tag-regular--variant="white" class="tag_component w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"><div class="tag_icon w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"></div><div class="text-style-tag-regular">menu</div></div></div><div class="menu_wrapper"><div class="menu"><div class="menu_top"><div class="menu_header"><div class="shop-listing_filter-label"><div data-wf--component---tag-regular--variant="white" class="tag_component w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"><div class="tag_icon w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"></div><div class="text-style-tag-regular">menu</div></div></div><div data-menu-button="close" class="shop-listing_filter_close"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 7 7" fill="none" class="icon-xxsmall"><path d="M3.14262 2.51492L5.65754 0L6.28593 0.628386L3.77101 3.14331L6.28524 5.65754L5.65685 6.28593L3.14262 3.7717L0.629076 6.28524L0.000690534 5.65685L2.51423 3.14331L0 0.629076L0.628386 0.000690534L3.14262 2.51492Z" fill="currentColor"></path></svg></div></div><div class="divider"></div><div class="menu_link_list"><a href="/products" aria-current="page" class="menu_link_item w-inline-block w--current"><div class="menu_link_icon"></div><div class="menu_link_text">Shop</div></a><a href="/gallery" class="menu_link_item w-inline-block"><div class="menu_link_icon"></div><div class="menu_link_text">Gallery</div></a><a href="/about" class="menu_link_item w-inline-block"><div class="menu_link_icon"></div><div class="menu_link_text">About</div></a></div></div><div class="menu_bottom"><div class="divider"></div><div class="menu_bottom_links"><a data-scramble-hover="link" href="#" class="footer_link w-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 8 8" fill="none" class="footer_link_icon"><path d="M3.2002 0.800049V1.80005H1V7.00024H6.2002V4.80005H7.2002V8.00024H0V0.800049H3.2002Z" fill="currentColor"></path><path d="M7.5237 3.01485C7.39812 2.76434 7.29194 2.52802 7.20515 2.30589C7.11836 2.08376 7.05096 1.87581 7.00296 1.68205L2.685 6L2 5.315L6.31795 0.997045C6.12419 0.949038 5.91624 0.88164 5.69411 0.79485C5.46526 0.701344 5.22894 0.595161 4.98515 0.476302L5.46145 0C6.27444 0.167508 6.98922 0.184748 7.60578 0.0517192L7.94828 0.394221C7.81374 0.998862 7.83098 1.71364 8 2.53855L7.5237 3.01485Z" fill="currentColor"></path></svg><div data-scramble-hover="target" class="text-style-tag-regular">Instagram</div></a><a data-scramble-hover="link" href="#" class="footer_link w-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 8 8" fill="none" class="footer_link_icon"><path d="M3.2002 0.800049V1.80005H1V7.00024H6.2002V4.80005H7.2002V8.00024H0V0.800049H3.2002Z" fill="currentColor"></path><path d="M7.5237 3.01485C7.39812 2.76434 7.29194 2.52802 7.20515 2.30589C7.11836 2.08376 7.05096 1.87581 7.00296 1.68205L2.685 6L2 5.315L6.31795 0.997045C6.12419 0.949038 5.91624 0.88164 5.69411 0.79485C5.46526 0.701344 5.22894 0.595161 4.98515 0.476302L5.46145 0C6.27444 0.167508 6.98922 0.184748 7.60578 0.0517192L7.94828 0.394221C7.81374 0.998862 7.83098 1.71364 8 2.53855L7.5237 3.01485Z" fill="currentColor"></path></svg><div data-scramble-hover="target" class="text-style-tag-regular">X</div></a></div></div><div class="popup-marker_wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-bottom-right"><rect x="10" width="10" height="0.999998" transform="rotate(90 10 0)" fill="currentColor"></rect><rect y="9" width="10" height="0.999999" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-bottom-left"><rect x="10" y="10" width="10" height="0.999997" transform="rotate(-180 10 10)" fill="currentColor"></rect><rect x="1" width="10" height="0.999998" transform="rotate(90 1 0)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-top-right"><rect y="8.74228e-07" width="10" height="0.999998" fill="currentColor"></rect><rect x="9" y="10" width="10" height="0.999999" transform="rotate(-90 9 10)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-top-left"><rect x="4.3711e-07" y="10" width="10" height="0.999999" transform="rotate(-90 4.3711e-07 10)" fill="currentColor"></rect><rect x="10" y="1" width="10" height="1" transform="rotate(-180 10 1)" fill="currentColor"></rect></svg><div class="thumbnail-border"></div></div></div><div class="menu_overlay"></div></div><div class="main-wrapper"><section class="section_default is-overflow-hidden"><div class="container"><div class="padding-global padding-section"><div class="default_wrapper"><h2 class="brk-page-title">Cannabis</h2><div class="shop-listing_component"><div class="shop-listing_header"><div class="tag_component"><div class="tag_icon"></div><div class="text-style-tag-regular">BRKFST shop</div></div></div><div class="brk-empty-state"><p>Coming soon.</p></div></div></section>
+
+<!-- ============ COLLECTIONS ============ -->
+<section class="section_default brk-collections">
+  <div class="brk-adbar">
+    <div class="brk-adbar_track"></div>
+  </div>
+  <div class="container">
+    <h2 class="brk-collections_title">Collections</h2>
+    <div class="brk-collections_grid">
+      <a class="brk-col-tile is-a" href="/products?cat=new" style="--tile:#FFCC01;">
+        <span class="brk-col-label">New Arrivals <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
+      </a>
+      <a class="brk-col-tile is-b" href="/products?cat=classics" style="--tile:#545454;">
+        <span class="brk-col-label">Classics <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
+      </a>
+      <a class="brk-col-tile is-c" href="/products" style="--tile:#0E8C9B;">
+        <span class="brk-col-label">Accessories <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
+      </a>
+      <a class="brk-col-tile is-d" href="/tobacco" style="--tile:#33421C;">
+        <span class="brk-col-label">Tobacco <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+</div><footer class="footer"><div class="container"><div class="padding-section-footer"><div class="footer_wrapper"><div class="footer_markers"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="footer_marker_icon is-top-right"><path d="M10 0V10H9V1H0V0H10Z" fill="currentColor" STYLE="mix-blend-mode:difference"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="footer_marker_icon is-top-left"><path d="M10 0V1H1V10H0V0H10Z" fill="currentColor" STYLE="mix-blend-mode:difference"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="footer_marker_icon is-bottom-right"><path d="M10 10L-4.37114e-07 10L-3.93402e-07 9L9 9L9 -4.37114e-08L10 0L10 10Z" fill="currentColor" STYLE="mix-blend-mode:difference"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="footer_marker_icon is-bottom-left"><path d="M-4.37116e-07 0L1 -4.37114e-08L1 9L10 9L10 10L0 10L-4.37116e-07 0Z" fill="currentColor" STYLE="mix-blend-mode:difference"></path></svg></div><div class="footer_inner"><div class="footer_bio_wrapper"><a href="/" class="footer_logo_wrapper_new w-inline-block"><img class="footer_logo_new" src="{{ 'brkfst-merch_brkfst-logo-white.png' | asset_url }}" alt="brkfst" style="height:2.2rem;width:auto;display:block;mix-blend-mode:normal;"/></a><div class="footer_bio_content"><div class="text-style-tag-regular">BRKFST © 2022</div><a data-w-id="b764d7e3-7d47-2a4f-faaa-efacb2f06feb" href="https://33rdcreative.com" target="_blank" class="web-credits w-inline-block"><div class="web-credits_text is-1">Web Credits</div><div class="web-credits_text is-boring">: 33rdcreative</div><div class="web-credits_text is-credit">This is a 33rd Creative website</div></a></div></div><div class="footer_seperator_wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 19 10" fill="none" class="footer_seperator_marker is-top"><rect y="1.66103e-06" width="10" height="0.999998" fill="currentColor"></rect><rect x="9" y="1.66103e-06" width="10" height="0.999998" fill="currentColor"></rect><rect x="9" y="10" width="10" height="0.999999" transform="rotate(-90 9 10)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 19 10" fill="none" class="footer_seperator_marker"><rect x="19" y="10" width="10" height="0.999999" transform="rotate(-180 19 10)" fill="currentColor"></rect><rect x="10" y="10" width="10" height="0.999999" transform="rotate(-180 10 10)" fill="currentColor"></rect><rect x="10" width="10" height="1" transform="rotate(90 10 0)" fill="currentColor"></rect></svg></div><div class="footer_seperator_wrapper is-mobile"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 19" fill="none" class="footer_seperator_marker-mobile is-right"><rect x="10.002" width="10" height="0.999998" transform="rotate(90 10.002 0)" fill="currentColor"></rect><rect x="10" y="8.99799" width="10" height="0.999998" transform="rotate(90 10 8.99799)" fill="currentColor"></rect><rect x="8.30429e-07" y="9.00134" width="10" height="0.999999" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 19" fill="none" class="footer_seperator_marker-mobile"><rect y="18.9997" width="10" height="0.999998" transform="rotate(-90 0 18.9997)" fill="currentColor"></rect><rect y="10" width="10" height="0.999998" transform="rotate(-90 0 10)" fill="currentColor"></rect><rect x="10" y="9.99963" width="10" height="0.999999" transform="rotate(180 10 9.99963)" fill="currentColor"></rect></svg></div><div class="footer_links_wrapper"><div class="footer_links"><div class="footer_links_header"><div class="text-style-tag-regular">[experience]</div><div class="accordion_lines"><div class="accordion_line is-1"></div><div class="accordion_line is-2"></div></div></div><div class="footer_link-list"><div class="accordion_body"><a data-scramble-hover="link" href="/products" aria-current="page" class="footer_link w-inline-block w--current"><div data-scramble-hover="target" class="text-style-tag-regular">Shop</div></a><a data-scramble-hover="link" href="/gallery" class="footer_link w-inline-block"><div data-scramble-hover="target" class="text-style-tag-regular">Gallery</div></a><a data-scramble-hover="link" href="/events" class="footer_link w-inline-block"><div data-scramble-hover="target" class="text-style-tag-regular">Events</div></a></div></div></div><div class="footer_links"><div class="footer_links_header"><div class="text-style-tag-regular">[company]</div><div class="accordion_lines"><div class="accordion_line is-1"></div><div class="accordion_line is-2"></div></div></div><div class="footer_link-list"><div class="accordion_body"><a data-scramble-hover="link" href="/about" class="footer_link w-inline-block"><div data-scramble-hover="target" class="text-style-tag-regular">About</div></a><a data-scramble-hover="link" href="/contact" class="footer_link w-inline-block"><div data-scramble-hover="target" class="text-style-tag-regular">Contact</div></a><a data-scramble-hover="link" href="/jobs" class="footer_link w-inline-block"><div data-scramble-hover="target" class="text-style-tag-regular">Jobs</div></a></div></div></div><div class="footer_links"><div class="footer_links_header"><div class="text-style-tag-regular">[support]</div><div class="accordion_lines"><div class="accordion_line is-1"></div><div class="accordion_line is-2"></div></div></div><div class="footer_link-list"><div class="accordion_body"><a data-scramble-hover="link" href="/delivery-returns" class="footer_link w-inline-block"><div data-scramble-hover="target" class="text-style-tag-regular">Delivery &amp; returns</div></a><a data-scramble-hover="link" href="/terms-conditions" class="footer_link w-inline-block"><div data-scramble-hover="target" class="text-style-tag-regular">Terms &amp; Conditions</div></a><a data-scramble-hover="link" href="{{ 'wf_6a229697fcb91dd168682307_6a229697fcb91dd1686823c3_Privacyverklaring.pdf' | asset_url }}" target="_blank" class="footer_link w-inline-block"><div data-scramble-hover="target" class="text-style-tag-regular">Privacy policy</div></a></div></div></div><div class="footer_links"><div class="footer_links_header"><div class="text-style-tag-regular">[Contact]</div><div class="accordion_lines"><div class="accordion_line is-1"></div><div class="accordion_line is-2"></div></div></div><div class="footer_link-list"><div class="accordion_body"><a data-scramble-hover="link" href="mailto:support@shopbrkfst.com" class="footer_link w-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 8 8" fill="none" class="footer_link_icon"><path d="M3.2002 0.800049V1.80005H1V7.00024H6.2002V4.80005H7.2002V8.00024H0V0.800049H3.2002Z" fill="currentColor"></path><path d="M7.5237 3.01485C7.39812 2.76434 7.29194 2.52802 7.20515 2.30589C7.11836 2.08376 7.05096 1.87581 7.00296 1.68205L2.685 6L2 5.315L6.31795 0.997045C6.12419 0.949038 5.91624 0.88164 5.69411 0.79485C5.46526 0.701344 5.22894 0.595161 4.98515 0.476302L5.46145 0C6.27444 0.167508 6.98922 0.184748 7.60578 0.0517192L7.94828 0.394221C7.81374 0.998862 7.83098 1.71364 8 2.53855L7.5237 3.01485Z" fill="currentColor"></path></svg><div data-scramble-hover="target" class="text-style-tag-regular">support@shopbrkfst.com</div></a></div></div></div><div class="footer_links"><div class="footer_links_header"><div class="text-style-tag-regular">[follow]</div><div class="accordion_lines"><div class="accordion_line is-1"></div><div class="accordion_line is-2"></div></div></div><div class="footer_link-list"><div class="accordion_body"><a data-scramble-hover="link" href="https://www.instagram.com/brkfstco/" target="_blank" class="footer_link w-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 8 8" fill="none" class="footer_link_icon"><path d="M3.2002 0.800049V1.80005H1V7.00024H6.2002V4.80005H7.2002V8.00024H0V0.800049H3.2002Z" fill="currentColor"></path><path d="M7.5237 3.01485C7.39812 2.76434 7.29194 2.52802 7.20515 2.30589C7.11836 2.08376 7.05096 1.87581 7.00296 1.68205L2.685 6L2 5.315L6.31795 0.997045C6.12419 0.949038 5.91624 0.88164 5.69411 0.79485C5.46526 0.701344 5.22894 0.595161 4.98515 0.476302L5.46145 0C6.27444 0.167508 6.98922 0.184748 7.60578 0.0517192L7.94828 0.394221C7.81374 0.998862 7.83098 1.71364 8 2.53855L7.5237 3.01485Z" fill="currentColor"></path></svg><div data-scramble-hover="target" class="text-style-tag-regular">Instagram</div></a><a data-scramble-hover="link" href="https://x.com/smokebrkfst" target="_blank" class="footer_link w-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 8 8" fill="none" class="footer_link_icon"><path d="M3.2002 0.800049V1.80005H1V7.00024H6.2002V4.80005H7.2002V8.00024H0V0.800049H3.2002Z" fill="currentColor"></path><path d="M7.5237 3.01485C7.39812 2.76434 7.29194 2.52802 7.20515 2.30589C7.11836 2.08376 7.05096 1.87581 7.00296 1.68205L2.685 6L2 5.315L6.31795 0.997045C6.12419 0.949038 5.91624 0.88164 5.69411 0.79485C5.46526 0.701344 5.22894 0.595161 4.98515 0.476302L5.46145 0C6.27444 0.167508 6.98922 0.184748 7.60578 0.0517192L7.94828 0.394221C7.81374 0.998862 7.83098 1.71364 8 2.53855L7.5237 3.01485Z" fill="currentColor"></path></svg><div data-scramble-hover="target" class="text-style-tag-regular">X</div></a></div></div></div><div class="footer_links"><div class="footer_links_header"><div class="text-style-tag-regular">[community]</div><div class="accordion_lines"><div class="accordion_line is-1"></div><div class="accordion_line is-2"></div></div></div><div class="footer_link-list"><div class="accordion_body"><a data-filter-open="" data-scramble-hover="link" href="#" class="footer_link w-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 8 8" fill="none" class="footer_link_icon"><path d="M3.2002 0.800049V1.80005H1V7.00024H6.2002V4.80005H7.2002V8.00024H0V0.800049H3.2002Z" fill="currentColor"></path><path d="M7.5237 3.01485C7.39812 2.76434 7.29194 2.52802 7.20515 2.30589C7.11836 2.08376 7.05096 1.87581 7.00296 1.68205L2.685 6L2 5.315L6.31795 0.997045C6.12419 0.949038 5.91624 0.88164 5.69411 0.79485C5.46526 0.701344 5.22894 0.595161 4.98515 0.476302L5.46145 0C6.27444 0.167508 6.98922 0.184748 7.60578 0.0517192L7.94828 0.394221C7.81374 0.998862 7.83098 1.71364 8 2.53855L7.5237 3.01485Z" fill="currentColor"></path></svg><div data-scramble-hover="target" class="text-style-tag-regular">Join the family</div></a></div></div></div></div></div></div></div></div><div data-filter-component="" class="popup_component"><div data-filter-close="" class="popup_overlay"></div><div class="popup is-newsletter"><div class="cart_top"><div class="close_wrapper"><div data-filter-close="" class="shop-listing_filter_close"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 7 7" fill="none" class="icon-xxsmall"><path d="M3.14262 2.51492L5.65754 0L6.28593 0.628386L3.77101 3.14331L6.28524 5.65754L5.65685 6.28593L3.14262 3.7717L0.629076 6.28524L0.000690534 5.65685L2.51423 3.14331L0 0.629076L0.628386 0.000690534L3.14262 2.51492Z" fill="currentColor"></path></svg></div></div></div><div class="popup_content is-newsletter"><p class="text-style-tag-regular">Subscribe and become part of the BRKFST family</p><div class="newsletter-form-block w-form"><form id="wf-form-newsletter" name="wf-form-newsletter" data-name="newsletter" method="get" class="newsletter-form" data-wf-page-id="6a229697fcb91dd16868232e" data-wf-element-id="f404a956-cb75-b39f-3677-aabc4fd2b3a5"><div class="form-input_group"><label for="email" class="text-style-tag-regular">Email Address</label><div class="form-input_wrapper"><input class="form-input w-input" maxlength="256" name="email" data-name="Email" placeholder="your email address" type="email" id="email" required=""/><div class="popup-marker_wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-bottom-right"><rect x="10" width="10" height="0.999998" transform="rotate(90 10 0)" fill="currentColor"></rect><rect y="9" width="10" height="0.999999" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-bottom-left"><rect x="10" y="10" width="10" height="0.999997" transform="rotate(-180 10 10)" fill="currentColor"></rect><rect x="1" width="10" height="0.999998" transform="rotate(90 1 0)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-top-right"><rect y="8.74228e-07" width="10" height="0.999998" fill="currentColor"></rect><rect x="9" y="10" width="10" height="0.999999" transform="rotate(-90 9 10)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-top-left"><rect x="4.3711e-07" y="10" width="10" height="0.999999" transform="rotate(-90 4.3711e-07 10)" fill="currentColor"></rect><rect x="10" y="1" width="10" height="1" transform="rotate(-180 10 1)" fill="currentColor"></rect></svg><div class="thumbnail-border"></div></div></div></div><div class="buttons_wrapper is-align-right"><input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Subscribe"/></div></form><div class="success-message_red w-form-done"><div class="text-style-tag-regular">Thank you! you are now subscribed.</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-marker_wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-bottom-right"><rect x="10" width="10" height="0.999998" transform="rotate(90 10 0)" fill="currentColor"></rect><rect y="9" width="10" height="0.999999" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-bottom-left"><rect x="10" y="10" width="10" height="0.999997" transform="rotate(-180 10 10)" fill="currentColor"></rect><rect x="1" width="10" height="0.999998" transform="rotate(90 1 0)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-top-right"><rect y="8.74228e-07" width="10" height="0.999998" fill="currentColor"></rect><rect x="9" y="10" width="10" height="0.999999" transform="rotate(-90 9 10)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-top-left"><rect x="4.3711e-07" y="10" width="10" height="0.999999" transform="rotate(-90 4.3711e-07 10)" fill="currentColor"></rect><rect x="10" y="1" width="10" height="1" transform="rotate(-180 10 1)" fill="currentColor"></rect></svg><div class="thumbnail-border"></div></div></div></div></footer><div data-cursor="" class="cursor"><div class="cursor-bubble"><span data-cursor-text-target="" class="text-style-tag-regular">info &amp; tickets</span><div class="button_icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 7 8" fill="none" class="button_icon"><path d="M7 5.25C5.90447 4.73684 4.86585 3.94737 3.86992 2.86842L3.04472 2.86842C3.51423 3.80263 3.96951 4.51316 4.41057 4.97368L1.01016 4.97368L1.01016 4.41556e-08L0 0L0 5.90789L4.41057 5.90789C3.96951 6.36842 3.51423 7.07895 3.04472 8L3.86992 8C4.86585 6.92105 5.90447 6.13158 7 5.63158V5.25Z" fill="currentColor"></path></svg></div></div></div><div sf-cart-popup="1" class="cart_component"><div sf-cart="1" class="cart"><div class="cart_top"><div class="cart_head"><div class="shop-listing_filter-option_header"><div class="shop-listing_filter-label"><div data-wf--component---tag-regular--variant="white" class="tag_component w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"><div class="tag_icon w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"></div><div class="text-style-tag-regular">cart</div></div><div class="text-style-tag-regular is-opacity-50">(<span sf-cart-count="1">0</span> items)</div></div><div sf-cart-close="1" class="shop-listing_filter_close"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 7 7" fill="none" class="icon-xxsmall"><path d="M3.14262 2.51492L5.65754 0L6.28593 0.628386L3.77101 3.14331L6.28524 5.65754L5.65685 6.28593L3.14262 3.7717L0.629076 6.28524L0.000690534 5.65685L2.51423 3.14331L0 0.629076L0.628386 0.000690534L3.14262 2.51492Z" fill="currentColor"></path></svg></div></div><div class="divider"></div><div sf-cart-list="1" class="cart-item_list"><div sf-cart-item="1" class="cart_item"><div class="w-layout-hflex cart-item_left-column"><div sf-show-image="1" class="cart-item-image"></div><div class="cart-item_info-block"><div class="cart-item_top"><div class="cart-item_info-top"><div sf-product-link="products" sf-show-title="1" class="text-style-tag-regular text-weight-medium">Product Title</div><div class="cart-item_variant_wrapper"><div class="text-style-tag-regular is-opacity-50">Size:</div><div sf-show-options="1" class="text-style-tag-regular is-opacity-50">Option 1</div></div><div class="cart-item_price-information"><div sf-show-price="1" class="text-style-tag-regular">$0</div><div sf-show-prediscount-price="with-quantity" class="text-style-tag-regular text-style-strikethrough">$0</div></div></div><div sf-cart-item-remove="1" class="cart-item-remover w-embed"><svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="0.5" width="20" height="20" rx="10" fill="#C9C9C9"/>
+<line x1="7.11137" y1="7.31979" x2="12.7648" y2="12.9732" stroke="white"/>
+<line y1="-0.5" x2="7.99512" y2="-0.5" transform="matrix(-0.707107 0.707107 0.707107 0.707107 13.2422 7.67334)" stroke="white"/>
+</svg></div></div><div class="cart-item_quantity-block"><div sf-change-quantity-dec="1" class="quantity-decreaser">-</div><input type="number" placeholder="1" sf-change-quantity="1" min="1" class="cart_quantity-changer"/><div sf-change-quantity-inc="1" class="quantity-increaser">+</div></div></div></div></div></div></div></div><div class="cart_bottom"><div class="divider"></div><div class="cart_subtotal"><div class="text-style-tag-regular text-weight-medium">subTotal</div><div sf-cart-subtotal="1" class="text-style-tag-regular text-weight-medium">$0.00</div></div><div class="text-style-tag-regular is-opacity-50">Shipping and VAT calculated at checkout</div><a sf-checkout="1" data-scramble-hover="link" href="#" class="button_wrapper primary-red w-inline-block"><div class="button_text-wrapper primary---black-6"><div data-scramble-hover="target" class="button_text primary---black-7">Checkout</div></div></a></div><div class="popup-marker_wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-bottom-right"><rect x="10" width="10" height="0.999998" transform="rotate(90 10 0)" fill="currentColor"></rect><rect y="9" width="10" height="0.999999" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-bottom-left"><rect x="10" y="10" width="10" height="0.999997" transform="rotate(-180 10 10)" fill="currentColor"></rect><rect x="1" width="10" height="0.999998" transform="rotate(90 1 0)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-top-right"><rect y="8.74228e-07" width="10" height="0.999998" fill="currentColor"></rect><rect x="9" y="10" width="10" height="0.999999" transform="rotate(-90 9 10)" fill="currentColor"></rect></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 10" fill="none" class="thumbnail-marker is-top-left"><rect x="4.3711e-07" y="10" width="10" height="0.999999" transform="rotate(-90 4.3711e-07 10)" fill="currentColor"></rect><rect x="10" y="1" width="10" height="1" transform="rotate(-180 10 1)" fill="currentColor"></rect></svg><div class="thumbnail-border"></div></div></div><div sf-cart-close="1" class="cart_overlay"></div><div class="popup-css w-embed"><style>
+[sf-cart-popup] {
+	visibility: hidden;
+}
+
+[sf-cart-popup].sf-cart-opened {
+	visibility: visible;
+}
+</style></div></div><div sf-cart-open="1" class="cart-button"><div data-wf--component---tag-regular--variant="white" class="tag_component w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"><div class="tag_icon w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"></div><div class="text-style-tag-regular">cart</div></div><div class="text-style-tag-regular is-opacity-50">(<span sf-cart-count="1">2</span> items)</div></div></div><div class="page-transition"><div class="page-transition_inner is-2"><div data-wf--component---tag-regular--variant="white" class="tag_component w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"><div class="tag_icon w-variant-7ef55acf-1b8d-2ca2-ed0c-867425523616"></div><div class="text-style-tag-regular">MADE B4 NOON</div></div></div></div><script src="{{ 'cf_js_jquery-3.5.1.min.dc5e7f18c8.js' | asset_url }}" type="text/javascript" crossorigin="anonymous"></script><script src="{{ 'wf_6a229697fcb91dd168682307_js_webflow.29e57cdd.c8430960020b5bf3.js' | asset_url }}" type="text/javascript" crossorigin="anonymous"></script><script src="{{ 'wf_gsap_3.15.0_gsap.min.js' | asset_url }}" type="text/javascript"></script><script src="{{ 'wf_gsap_3.15.0_ScrollTrigger.min.js' | asset_url }}" type="text/javascript"></script><script src="{{ 'wf_gsap_3.15.0_SplitText.min.js' | asset_url }}" type="text/javascript"></script><script src="{{ 'wf_gsap_3.15.0_ScrambleTextPlugin.min.js' | asset_url }}" type="text/javascript"></script><script src="{{ 'wf_gsap_3.15.0_Flip.min.js' | asset_url }}" type="text/javascript"></script><script src="{{ 'wf_gsap_3.15.0_CustomEase.min.js' | asset_url }}" type="text/javascript"></script><script src="{{ 'wf_gsap_3.15.0_Observer.min.js' | asset_url }}" type="text/javascript"></script><script src="{{ 'wf_gsap_3.15.0_Draggable.min.js' | asset_url }}" type="text/javascript"></script><script src="{{ 'wf_gsap_3.15.0_InertiaPlugin.min.js' | asset_url }}" type="text/javascript"></script><script type="text/javascript">gsap.registerPlugin(ScrollTrigger,SplitText,ScrambleTextPlugin,Flip,CustomEase,Observer,Draggable,InertiaPlugin);</script><!--🤙 https://slater.app/20350.js-->
+<script>document.addEventListener("DOMContentLoaded", function() {function loadbrkfst(e){let t=document.createElement("script");t.setAttribute("src",e),t.setAttribute("type","module"),document.body.appendChild(t),t.addEventListener("load",()=>{console.log("Slater loaded BRKFST.js: https://slater.app/20350.js 🤙")}),t.addEventListener("error",e=>{console.log("Error loading file",e)})}let src=window.location.host.includes("webflow.io")?"https://slater.app/20350.js":"{{ 'assets.slater.app_slater_20350.js' | asset_url }}";loadbrkfst(src);})</script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.11"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12.2.0/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script> 
+<!-- Finsweet Attributes -->
+<script async type="module"
+src="https://cdn.jsdelivr.net/npm/@finsweet/attributes@2.7.1/attributes.js"
+fs-list
+></script>
+<script>
+  // ============================================
+  // PAGE TRANSITIONS
+  // ============================================
+  document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.querySelector('.page-transition');
+    const content = document.querySelector('.page-content');
+
+    // Make content visible now that GSAP is ready (no flicker)
+    gsap.set(content, { opacity: 1, visibility: 'visible' });
+    // Position overlay covering the screen
+    gsap.set(overlay, { y: 0 });
+    gsap.to(overlay, {
+      y: '-100%',
+      duration: 0.8,
+      delay: 0.5,
+      ease: 'power3.inOut'
+    });
+    // ----- EXIT ANIMATION (runs before navigating away) -----
+    const handleLinkClick = (e) => {
+      const link = e.currentTarget;
+      const href = link.getAttribute('href');
+      // Bail out if it's not a real navigation
+      if (
+        !href ||
+        href.startsWith('#') ||                          // anchor link
+        href.startsWith('mailto:') ||                    // email
+        href.startsWith('tel:') ||                       // phone
+        link.target === '_blank' ||                      // new tab
+        link.hasAttribute('download') ||                 // download
+        e.metaKey || e.ctrlKey || e.shiftKey             // user opening in new tab
+      ) {
+        return;
+      }
+      // Only intercept internal links (same origin)
+      const url = new URL(href, window.location.href);
+      if (url.origin !== window.location.origin) return;
+      e.preventDefault();
+      // Animate overlay back in, then navigate
+      gsap.set(overlay, { y: '100%' }); // ensure it starts below
+      gsap.to(overlay, {
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          window.location.href = href;
+        }
+      });
+    };
+    // Attach to every internal link
+    document.querySelectorAll('a[href]').forEach(link => {
+      link.addEventListener('click', handleLinkClick);
+    });
+    // ----- BFCACHE FIX -----
+    // When user hits back button, browser may restore the page with
+    // the overlay still covering it. Re-run the reveal in that case.
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        gsap.set(overlay, { y: 0 });
+        gsap.to(overlay, {
+          y: '-100%',
+          duration: 0.8,
+          delay: 0.5,
+          ease: 'power3.inOut'
+        });
+      }
+    });
+  });
+</script><script src="{{ 'wf_6a229697fcb91dd168682307_689e5ba67671442434f3ca35_6a229697fcb91dd168682317_footer_accordion-1.0.0.js' | asset_url }}" type="text/javascript"></script><script id="brk-cat-filter">(function(){function run(){var cat=new URLSearchParams(location.search).get("cat");var items=document.querySelectorAll(".cl_shop-listing_item");items.forEach(function(it){var c=it.getAttribute("data-brk-cat")||"new";it.style.display=(!cat||cat===c)?"":"none";});var lbl=document.querySelector("[data-brk-shop-cat]");if(lbl)lbl.textContent=cat==="classics"?" / CLASSICS":cat==="new"?" / NEW ARRIVALS":"";}if(document.readyState!=="loading")run();else document.addEventListener("DOMContentLoaded",run);window.addEventListener("popstate",run);})();</script><script id="brk-home-header-js">(function(){var btn=document.getElementById("dirBtn"),panel=document.getElementById("directory");if(!btn||!panel)return;function close(){btn.classList.remove("isOpen");panel.classList.remove("isOpen");btn.setAttribute("aria-expanded","false");}function open(){btn.classList.add("isOpen");panel.classList.add("isOpen");btn.setAttribute("aria-expanded","true");}btn.addEventListener("click",function(e){e.stopPropagation();panel.classList.contains("isOpen")?close():open();});panel.addEventListener("click",function(e){if(e.target.closest("a"))close();});document.addEventListener("click",function(e){if(panel.classList.contains("isOpen")&&!panel.contains(e.target)&&e.target!==btn)close();});document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});})();</script><script src="{{ 'js_nav-autohide.js' | asset_url }}" defer></script><style id="brk-card-meta-css">
+/* Product card meta, Anduril-style: name and price share a baseline with a
+   hairline rule under them, and the drop line sits below in grey. Replaces the
+   stacked name-then-price block, which left a lot of dead space in the grid. */
+#brk-shop .product-card_title,
+.product-card_title{
+  flex-direction:row;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:1.5em;
+  padding-bottom:.55em;
+  border-bottom:1px solid rgba(255,255,255,.22);
+}
+.product-card_title > :first-child{flex:1 1 auto;min-width:0;}
+.product-card_title > :last-child{flex:0 0 auto;white-space:nowrap;}
+.product-card_content{gap:.6em !important;}
+
+/* Description stays on a single line and scrolls its overflow on hover, so the
+   drawer is a fixed height on every row - including the last, which has the
+   least clearance before the section's overflow:hidden edge. */
+.product-card_drop{
+  opacity:.5;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.product-card_drop .brk-desc-scroll{display:inline-block;will-change:transform;}
+/* only the ones that actually overflow move; --shift and --dur are measured in JS */
+.product-card:hover .product-card_drop.is-over .brk-desc-scroll{
+  animation:brk-desc-scroll var(--dur,6s) ease-in-out infinite alternate;
+}
+@keyframes brk-desc-scroll{
+  0%,10%   {transform:translateX(0);}
+  90%,100% {transform:translateX(calc(-1 * var(--shift,0px)));}
+}
+@media (prefers-reduced-motion:reduce){
+  .product-card:hover .product-card_drop.is-over .brk-desc-scroll{animation:none;}
+}
+
+/* status chips, stacked top-right over the thumbnail */
+.product-card_thumbnail_wrapper{position:relative;}
+.brk-chips{
+  position:absolute;top:0;right:0;z-index:3;
+  display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.3em;
+  padding:.5em;pointer-events:none;
+}
+.brk-chip{
+  /* Anduril sets these in Elios, which is licensed - Chivomono is already on
+     the site and fills the same technical-label role. Metrics match theirs:
+     10px / 400 / normal tracking / 3px 6px. */
+  font-family:'Chivomono',ui-monospace,'SFMono-Regular',Menlo,monospace !important;
+  font-size:10px !important;font-weight:400 !important;letter-spacing:normal;text-transform:uppercase;
+  line-height:1.28;padding:3px 6px;white-space:nowrap;color:#010101;
+}
+/* Palette: cream #EFE8CB / deep green #324E44 / brick #D0391B.
+   Scoped to these components - the site-wide --brk-accent is left alone. */
+.brk-chip.is-limited{background:#D0391B;color:#FFFFFF;}
+.brk-chip.is-classics{background:#545454;color:#FFFFFF;}
+.brk-chip.is-restocked{background:#545454;color:#FFFFFF;}
+.brk-chip.is-soldout{background:transparent;color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);}
+@media(max-width:720px){.brk-chip{font-size:9px;}}
+
+/* Chips slide in from the left behind a wipe as the card enters view, echoing
+   the logo reveal. They sit hidden until .is-in lands, so they animate once. */
+.brk-chip{clip-path:inset(0 100% 0 0);--delay:0s;--reveal:.55s;}
+.brk-chip.is-in{
+  animation:brk-chip-in var(--reveal) cubic-bezier(.22,.61,.36,1) var(--delay) forwards;
+}
+@keyframes brk-chip-in{
+  from{clip-path:inset(0 100% 0 0);transform:translateX(-12px);}
+  to{clip-path:inset(0 0 0 0);transform:translateX(0);}
+}
+/* Blinking status light. The square blinks, not the whole chip - flashing a
+   block of text is harder to read and rougher on the eye. ~0.7Hz, well under
+   the 3Hz photosensitivity threshold. */
+.brk-chip{display:inline-flex;align-items:center;gap:.5em;}
+.brk-chip::before{
+  content:"";width:.5em;height:.5em;flex:0 0 auto;
+  background:currentColor;
+  /* held solid during the slide, then blinks - delay covers the reveal plus
+     this chip's own stagger */
+  animation:brk-chip-blink 1.4s steps(1,end) calc(var(--delay) + var(--reveal)) infinite;
+}
+@keyframes brk-chip-blink{
+  0%,49%{opacity:1;}
+  50%,100%{opacity:.15;}
+}
+@media (prefers-reduced-motion:reduce){
+  /* no wipe, no blink - steady chip and steady light */
+  .brk-chip,.brk-chip.is-in{clip-path:none;animation:none;}
+  .brk-chip::before{animation:none;opacity:1;}
+}
+/* The page ships a global font lock -
+   body *:not([class*=fwdufb]):not(.ti):not([class*=icon]) { ...Helvetica!important }
+   at specificity (0,3,1). This selector is (0,4,0) so the mono actually lands. */
+.product-card .brk-chips .brk-chip.brk-chip{
+  font-family:'Chivomono',ui-monospace,'SFMono-Regular',Menlo,monospace !important;
+}
+
+</style>
+<script id="brk-card-meta-js">
+(function(){
+  // Every product is Limited Edition by default; anything listed in CHIPS uses
+  // that instead. Values are any of: limited, classics, restocked, soldout.
+  var DEFAULT_CHIPS = ['limited'];
+  var CHIPS = {
+    'brkfst-white-classic-tee': ['classics'],
+    'brkfst-black-classic-tee': ['classics']
+  };
+
+  var LABEL = {limited:'Limited Edition', classics:'Classics',
+               restocked:'Restocked', soldout:'Sold Out'};
+
+  function slug(href){
+    var m = (href||'').match(/\/products\/([^/?#]+)/);
+    return m ? m[1] : null;
+  }
+
+  function decorate(card){
+    if (card.dataset.brkMeta) return;
+    card.dataset.brkMeta = '1';
+
+    // one-line description; its overflow scrolls on hover instead of wrapping
+    var desc = card.querySelector('.product-card_description p');
+    if (desc && !desc.querySelector('.brk-desc-scroll')){
+      desc.classList.add('product-card_drop');
+      var span = document.createElement('span');
+      span.className = 'brk-desc-scroll';
+      span.textContent = desc.textContent;
+      desc.textContent = '';
+      desc.appendChild(span);
+      measure(desc, span);
+    }
+
+    var keys = CHIPS[slug(card.getAttribute('href'))] || DEFAULT_CHIPS;
+    if (!keys || !keys.length) return;
+    var wrap = card.querySelector('.product-card_thumbnail_wrapper');
+    if (!wrap || wrap.querySelector('.brk-chips')) return;
+
+    var box = document.createElement('div');
+    box.className = 'brk-chips';
+    keys.forEach(function(k){
+      if (!LABEL[k]) return;
+      var chip = document.createElement('span');
+      chip.className = 'brk-chip is-' + k;
+      chip.textContent = LABEL[k];
+      box.appendChild(chip);
+    });
+    wrap.appendChild(box);
+    reveal(box);
+  }
+
+  // Reveal each chip box once, when its card scrolls into view. Falls back to
+  // showing them immediately where IntersectionObserver isn't available.
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      Array.prototype.forEach.call(e.target.querySelectorAll('.brk-chip'), function(chip, i){
+        chip.style.setProperty('--delay', (i * 0.12) + 's');   // stagger the second chip
+        chip.classList.add('is-in');
+      });
+      io.unobserve(e.target);
+    });
+  }, {threshold:0.25}) : null;
+
+  function reveal(box){
+    if (!io){
+      Array.prototype.forEach.call(box.querySelectorAll('.brk-chip'), function(c){ c.classList.add('is-in'); });
+      return;
+    }
+    io.observe(box);
+  }
+
+
+  // How far the text runs past the visible line, and how long it should take.
+  // Deferred to rAF because width is 0 until the card has laid out.
+  function measure(desc, span){
+    requestAnimationFrame(function(){
+      var shift = span.scrollWidth - desc.clientWidth;
+      if (shift > 4){
+        desc.classList.add('is-over');
+        desc.style.setProperty('--shift', shift + 'px');
+        desc.style.setProperty('--dur', Math.max(3, shift / 28) + 's');  // steady reading pace
+      } else {
+        desc.classList.remove('is-over');
+      }
+    });
+  }
+
+  // widths change with the viewport, so re-measure on resize
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      Array.prototype.forEach.call(document.querySelectorAll('.product-card_drop'), function(desc){
+        var span = desc.querySelector('.brk-desc-scroll');
+        if (span) measure(desc, span);
+      });
+    }, 200);
+  });
+
+  function run(){
+    Array.prototype.forEach.call(document.querySelectorAll('a.product-card'), decorate);
+  }
+
+  // the grid is rendered client-side and re-rendered on filter changes
+  new MutationObserver(run).observe(document.documentElement, {childList:true, subtree:true});
+  document.addEventListener('DOMContentLoaded', run);
+  run();
+})();
+</script>
+<style id="brk-shop-grid-css">
+/* Dense 3-up listing, closer to the reference. The stock listing is 3 columns
+   with a 90px row gap and 7% image padding, so one row eats a screen. This
+   pulls the rows in and lets the garments fill more of each tile. */
+.cl_shop-listing_list{
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  column-gap:10px !important;
+  row-gap:34px !important;
+}
+.cl_shop-listing_list .product-card_thumbnail_image{padding:2% !important;}
+.cl_shop-listing_list .product-card_thumbnail_wrapper{aspect-ratio:4/5;}
+@media(max-width:720px){
+  .cl_shop-listing_list{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    column-gap:8px !important;row-gap:26px !important;
+  }
+}
+</style>
+
+<script id="brk-shop-grid-js">
+(function(){ try { localStorage.removeItem('brk-shop-layout'); } catch(e){} })();
+</script><style id="brk-collections-css">
+/* Collection tiles. Solid military fills stand in until the photography lands -
+   to swap one in, drop a background-image on the tile and the fill just sits
+   behind it as the loading colour:
+     style="--tile:#324E44;background-image:url(/path.jpg)" */
+.brk-collections{padding:0 0 5em;}
+/* The shop listing sits in a padding-section wrapper carrying ~123px of bottom
+   padding, which left a big void above the ad bar. :has() scopes this to the
+   listing's wrapper only, so other sections keep their spacing.
+   The drawer is a single line on every card now, so this only needs to clear
+   that one line - the section is overflow:hidden and the bottom row has no row
+   below it to expand into. */
+.padding-global.padding-section:has(.shop-listing_component){padding-bottom:3em !important;}
+.brk-collections_title{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:clamp(2.2rem,6vw,4.5rem);font-weight:500;letter-spacing:-.02em;
+  line-height:1.05;color:#fff;margin:0 0 .55em;
+}
+
+/* Scrolling announcement bar - solid white, black type, full bleed. */
+.brk-adbar{
+  background:#fff;color:#010101;
+  overflow:hidden;margin:0 0 2.2em;
+  width:100vw;margin-left:calc(50% - 50vw);
+}
+.brk-adbar_track{
+  display:flex;width:max-content;
+  animation:brk-marquee 30s linear infinite;
+}
+.brk-adbar:hover .brk-adbar_track{animation-play-state:paused;}
+.brk-adbar_group{display:flex;align-items:center;}
+.brk-collections .brk-adbar .brk-adbar_item.brk-adbar_item{
+  font-family:'Chivomono',ui-monospace,'SFMono-Regular',Menlo,monospace !important;
+  font-size:12px !important;font-weight:400 !important;
+  text-transform:uppercase;letter-spacing:.08em;line-height:1;
+  padding:.95em 0;white-space:nowrap;color:#010101;
+}
+.brk-adbar_dot{
+  margin:0 9em;flex:0 0 auto;
+  width:7px;height:7px;display:block;background:#FFFFFF;   /* bar is black; currentColor resolved dark */
+}
+@keyframes brk-marquee{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+@media (prefers-reduced-motion:reduce){
+  .brk-adbar_track{animation:none;}
+}
+.brk-collections_grid{
+  display:grid;
+  /* three tracks so the rows can alternate: narrow+wide, then wide+narrow */
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  /* a fixed row height keeps both tiles in a row flush, which aspect-ratio
+     can't do when their widths differ */
+  grid-auto-rows:clamp(200px,26vw,360px);
+  gap:10px;
+}
+.brk-collections_grid .is-a{grid-column:span 1;}
+.brk-collections_grid .is-b{grid-column:span 2;}
+.brk-collections_grid .is-c{grid-column:span 2;}
+.brk-collections_grid .is-d{grid-column:span 1;}
+.brk-col-tile{
+  position:relative;display:block;
+  height:100%;
+  background-color:var(--tile,#324E44);
+  background-size:cover;background-position:center;
+  text-decoration:none;overflow:hidden;
+  /* notched top-right corner, as in the reference */
+  clip-path:polygon(0 0, calc(100% - 34px) 0, 100% 34px, 100% 100%, 0 100%);
+  transition:filter .35s ease;
+}
+.brk-col-tile:hover{filter:brightness(1.12);}
+
+/* ---- paper treatment ----------------------------------------------
+   Two stacked layers over the flat fill:
+   1. an SVG feTurbulence grain (data URI, no asset request) for fibre
+   2. a soft diagonal sheen + inset shadow so the surface reads uneven
+   Both sit under the label, which keeps its difference blend.        */
+.brk-col-tile::after{
+  content:"";
+  position:absolute;inset:0;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23p)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size:180px 180px;
+  /* overlay, not multiply: on a dark fill multiply only darkens uniformly and
+     the fibre disappears - overlay pushes both light and dark so it reads */
+  mix-blend-mode:overlay;
+  opacity:.85;
+}
+.brk-col-tile::before{
+  content:"";
+  position:absolute;inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(118deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 38%,
+                            rgba(0,0,0,.05) 72%, rgba(0,0,0,.13) 100%);
+  box-shadow:inset 0 0 60px rgba(0,0,0,.16);
+  z-index:1;
+}
+/* keep the label above the paper layers */
+.brk-col-label{z-index:2;}
+@media (prefers-reduced-motion:reduce){.brk-col-tile{transition:none;}}
+.brk-col-label{
+  position:absolute;top:0;left:0;padding:1em 1.2em;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:clamp(1rem,1.6vw,1.5rem);font-weight:500;line-height:1;
+  color:#FFFFFF;
+}
+@media(max-width:720px){
+  .brk-collections_grid{grid-template-columns:1fr;grid-auto-rows:clamp(160px,42vw,240px);}
+  .brk-collections_grid .is-a,.brk-collections_grid .is-b,
+  .brk-collections_grid .is-c,.brk-collections_grid .is-d{grid-column:span 1;}
+  .brk-col-tile{clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);}
+}
+@media (prefers-reduced-motion:reduce){.brk-col-tile{transition:none;}}
+</style>
+<script id="brk-adbar-js">
+(function(){
+  var MESSAGES = [
+    'Welcome 2 BRKFST',
+    'Store Nigeria Opening',
+    '10% Discount At Checkout'
+  ];
+
+  function unit(text){
+    return '<span class="brk-adbar_item">' + text + '</span>' +
+           '<span class="brk-adbar_dot" aria-hidden="true"></span>';
+  }
+
+  function build(){
+    var bar = document.querySelector('.brk-adbar');
+    var track = bar && bar.querySelector('.brk-adbar_track');
+    if (!track) return;
+
+    var group = document.createElement('div');
+    group.className = 'brk-adbar_group';
+    track.innerHTML = '';
+    track.appendChild(group);
+
+    // Cycle the messages until the group spans the viewport, then keep going to
+    // a whole multiple of the set - otherwise the sequence jumps at the loop point.
+    var i = 0;
+    do {
+      group.insertAdjacentHTML('beforeend', unit(MESSAGES[i % MESSAGES.length]));
+      i++;
+    } while ((group.getBoundingClientRect().width < window.innerWidth || i % MESSAGES.length !== 0)
+             && i < 30);
+
+    // second identical group is what makes the -50% loop seamless
+    var clone = group.cloneNode(true);
+    clone.setAttribute('aria-hidden','true');
+    track.appendChild(clone);
+  }
+
+  var t;
+  window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(build, 200); });
+  document.addEventListener('DOMContentLoaded', build);
+  build();
+})();
+</script>
+<style id="brk-cursor-bubble-css">
+/* Hover bubble: white with black text, replacing the yellow/white pairing
+   (white on #ffe500 was barely legible). */
+.cursor-bubble{background:#ffffff !important;color:#010101 !important;}
+.cursor-bubble *{color:#010101 !important;fill:currentColor;}
+</style>
+<style id="brk-page-title-css">
+/* Page title banded by full-bleed rules, same treatment as Collections below.
+   Negative margin breaks it out of the container so the rules run edge to edge. */
+.brk-page-title{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:clamp(2.2rem,6vw,4.5rem);font-weight:500;letter-spacing:-.02em;
+  line-height:1.05;color:#fff;
+  margin:0 0 1.1em;padding:.18em 0;
+  width:100vw;margin-left:calc(50% - 50vw);padding-left:calc(50vw - 50%);
+}
+</style>
+<script src="{{ 'js_reveal.js' | asset_url }}" defer></script>
+<script src="{{ 'js_nav-scramble.js' | asset_url }}" defer></script>
+<style id="brk-empty-state-css">.brk-empty-state{min-height:46vh;display:flex;align-items:center;justify-content:flex-start;padding:4em 0;}.brk-empty-state p{font-family:'Chivomono',ui-monospace,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.5;margin:0;}</style>
+<style id="brk-light-fixes">
+/* Inversion follow-ups: pieces that were designed against black. */
+.product-card_title{border-bottom-color:rgba(0,0,0,.22) !important;}
+/* Ad bar tracks the nav. Nav tucked away -> black bar, so it carries the
+   contrast on the white page. Nav bar on screen -> the two black bands would
+   read as one block, so the ad bar inverts to white with black type.
+   Colour only: no size, margin or border changes, so nothing shifts. */
+.brk-adbar{background:#0A0A0A !important;transition:background-color .35s ease;}
+.brk-adbar .brk-adbar_item{color:#FFFFFF !important;transition:color .35s ease;}
+.brk-adbar_dot{filter:none;background:#FFFFFF !important;transition:background-color .35s ease;}
+html:not(.brk-nav-hidden) .brk-adbar{background:#FFFFFF !important;}
+html:not(.brk-nav-hidden) .brk-adbar .brk-adbar_item{color:#0A0A0A !important;}
+html:not(.brk-nav-hidden) .brk-adbar_dot{background:#0A0A0A !important;}
+@media (prefers-reduced-motion:reduce){
+  .brk-adbar,.brk-adbar .brk-adbar_item,.brk-adbar_dot{transition:none;}
+}
+/* hover bubble was white-on-black - flip to orange so it pops on white */
+.cursor-bubble{background:#FF6A00 !important;color:#0A0A0A !important;}
+.cursor-bubble *{color:#0A0A0A !important;fill:currentColor;}
+/* primary CTAs -> orange, black text (highest contrast on this hue) */
+.button_wrapper,.brk-cta,.add-to-cart,[class*="add-to-cart"],.w-commerce-commerceaddtocartbutton
+{background:#FF6A00 !important;color:#0A0A0A !important;border-radius:0 !important;}
+.button_wrapper .button_text,.button_wrapper *{color:#0A0A0A !important;}
+/* cart button sat as a dark pill on black */
+.brk-cart,[class*="cart_button"],[class*="cart-button"]
+{background:#0A0A0A !important;color:#FFFFFF !important;}
+/* section title rules */
+.brk-page-title{color:#0A0A0A !important;}
+/* the nav bar fades its background out when auto-hidden; on a light page
+   that leaves the white logo invisible, so darken it in that state only */
+.Header.nav-auto-hidden .Header-logo svg path,
+.Header.nav-auto-hidden .Header-logo svg text{fill:#0A0A0A !important;}
+/* footer logo ships as a white PNG - invert it so it reads on the light footer */
+.footer_logo_new{filter:invert(1) !important;}
+/* cart button sits on black - the global text override was still forcing
+   its child labels to black, so force the whole subtree white */
+.brk-cart,.brk-cart *,
+[class*="cart_button"],[class*="cart_button"] *,
+[class*="cart-button"],[class*="cart-button"] *,
+.shop-listing_filter-label,.shop-listing_filter-label *{color:#FFFFFF !important;}
+.brk-cart .tag_icon,[class*="cart_button"] .tag_icon{background:#FFFFFF !important;}
+/* Size filter retired: the Webflow interaction behind it never survived the
+   export, so "Available size" is now a plain label, not a control. */
+.shop-listing_filter_component{display:none !important;}
+[data-filter-open],a.button_wrapper[href="#"]{
+  pointer-events:none !important;cursor:default !important;text-decoration:none !important;
+}
+[data-filter-open] .button_icon-wrapper{display:none !important;}
+</style>
+<script src="{{ 'js_newsletter-popup.js' | asset_url }}" defer></script>
+
+<script src="{{ 'brk-cart-native.js' | asset_url }}" defer></script>
