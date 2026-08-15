@@ -36,8 +36,12 @@ Two jobs, in order:
 Only ever run this on the front/back POV shots. Detail shots (crests, collars,
 fabric close-ups) keep their white background and must not go through here.
 
+Pass --keep-background to leave the subject on its white sweep. Framing is
+still normalised, so those products line up with the rest of the grid, but
+nothing is cut out. The accessories (ashtray, socks, lighters) use this.
+
 Usage:
-    normalize-product-photos.py [--shared-scale] front.png back.png [...]
+    normalize-product-photos.py [--shared-scale] [--keep-background] front.png back.png [...]
 
 Files are rewritten in place. Widths are deliberately *not* forced to match:
 an open-front jacket is wider than its back and squashing it to match would
@@ -62,6 +66,9 @@ ALPHA_FLOOR = 8
 # Leftover blobs smaller than this share of the garment are studio scuff marks,
 # not product, so they get dropped too.
 SPECK_RATIO = 0.005
+# Width of the boundary band left with its original soft alpha when the
+# interior is forced opaque.
+EDGE_FEATHER = 3
 
 _session = None
 
@@ -90,14 +97,32 @@ def trim_letterbox(rgba):
     return rgba[top:bottom, left:right]
 
 
+def already_knocked_out(rgba):
+    """True if this image's background has been cleared already.
+
+    Running segmentation a second time re-cuts an image that is already clean
+    and trims real product away -- splitting the paired lighter shot and then
+    passing the halves back through cost the olive one 10% of its height. A
+    studio frame is opaque to its corners; a knocked-out one is not.
+    """
+    alpha = rgba[..., 3]
+    edge = np.concatenate([alpha[0], alpha[-1], alpha[:, 0], alpha[:, -1]])
+    return bool((edge <= ALPHA_FLOOR).mean() > 0.5)
+
+
 def drop_background(rgba):
     """Return rgba with the studio sweep segmented away."""
     from rembg import remove
 
     rgba = trim_letterbox(rgba)
-    out = np.array(
-        remove(Image.fromarray(rgba, "RGBA"), session=_rembg_session()).convert("RGBA")
-    )
+    if already_knocked_out(rgba):
+        out = rgba.copy()
+    else:
+        out = np.array(
+            remove(
+                Image.fromarray(rgba, "RGBA"), session=_rembg_session()
+            ).convert("RGBA")
+        )
 
     # Segmentation can leave a stray speck where a shadow read as product.
     # Keep the garment and anything a meaningful fraction of its size (a
@@ -107,6 +132,16 @@ def drop_background(rgba):
         sizes = ndimage.sum_labels(np.ones_like(labels), labels, range(1, count + 1))
         keep = 1 + np.flatnonzero(sizes >= sizes.max() * SPECK_RATIO)
         out[~np.isin(labels, keep), 3] = 0
+
+    # Low-contrast subjects come back half-transparent in places: the cream
+    # socks on a white sweep had 7.5% of their area under alpha 200, so the
+    # card background showed straight through the product. Force the interior
+    # opaque while leaving a band at the boundary untouched, so the edge keeps
+    # its anti-aliasing instead of turning into a hard cut-out.
+    interior = ndimage.binary_erosion(
+        out[..., 3] > ALPHA_FLOOR, iterations=EDGE_FEATHER, border_value=0
+    )
+    out[interior, 3] = 255
     return out
 
 
@@ -118,16 +153,24 @@ def garment_box(rgba):
     return xs.min(), ys.min(), xs.max() + 1, ys.max() + 1
 
 
-def place(rgba, scale):
-    """Scale the garment by `scale` and centre it on the shared canvas."""
+def place(rgba, scale, background_alpha=0):
+    """Scale the garment by `scale` and centre it on the shared canvas.
+
+    The requested scale comes from a height target, but a wide flat subject --
+    the ashtray shot from the side, 958x353 -- would then overflow the canvas
+    width and get its ends clipped off. Fitting to the width too keeps the
+    whole product on the canvas; such a view simply ends up shorter than the
+    height target, which is what it should look like next to a face-on view.
+    """
     x0, y0, x1, y1 = garment_box(rgba)
     cropped = Image.fromarray(rgba[y0:y1, x0:x1], "RGBA")
 
+    scale = min(scale, CANVAS[0] / cropped.width)
     width = max(1, round(cropped.width * scale))
     height = max(1, round(cropped.height * scale))
     cropped = cropped.resize((width, height), Image.LANCZOS)
 
-    canvas = Image.new("RGBA", CANVAS, (255, 255, 255, 0))
+    canvas = Image.new("RGBA", CANVAS, (255, 255, 255, background_alpha))
     # No mask on the paste: the canvas is already empty, and passing `cropped`
     # as its own mask would multiply alpha by itself, hardening every
     # anti-aliased edge and shifting the measured bounding box.
@@ -135,13 +178,36 @@ def place(rgba, scale):
     return canvas
 
 
-def main(paths, shared_scale=False):
+def keep_background(rgba):
+    """Frame the subject consistently but leave it on its white sweep.
+
+    Segmentation still runs, but only to locate the subject so the framing
+    matches the cut-out products. The returned pixels are the original frame
+    over white -- nothing is knocked out.
+    """
+    located = drop_background(rgba)
+    x0, y0, x1, y1 = garment_box(located)
+
+    flat = Image.new("RGBA", (rgba.shape[1], rgba.shape[0]), (255, 255, 255, 255))
+    flat.alpha_composite(Image.fromarray(rgba, "RGBA"))
+    out = np.array(flat)
+    # Mark everything outside the subject's box as "empty" for measurement
+    # only; place() crops to that box, so the saved pixels stay untouched.
+    mask = np.zeros(out.shape[:2], bool)
+    mask[y0:y1, x0:x1] = True
+    out[~mask, 3] = 0
+    return out
+
+
+def main(paths, shared_scale=False, cut_out=True):
     cleaned = []
     for path in paths:
-        rgba = drop_background(np.array(Image.open(path).convert("RGBA")))
+        rgba = np.array(Image.open(path).convert("RGBA"))
+        rgba = drop_background(rgba) if cut_out else keep_background(rgba)
         box = garment_box(rgba)
         cleaned.append((path, rgba, box))
-        print(f"{path}: garment {box[2] - box[0]}x{box[3] - box[1]} after knockout")
+        verb = "after knockout" if cut_out else "located (kept on white)"
+        print(f"{path}: subject {box[2] - box[0]}x{box[3] - box[1]} {verb}")
 
     target = CANVAS[1] * GARMENT_HEIGHT_RATIO
     # Default: each view gets its own scale so they all stand the same height.
@@ -151,7 +217,7 @@ def main(paths, shared_scale=False):
 
     for path, rgba, box in cleaned:
         scale = target / (tallest if shared_scale else box[3] - box[1])
-        out = place(rgba, scale)
+        out = place(rgba, scale, background_alpha=0 if cut_out else 255)
         out.save(path, optimize=True)
         ys, xs = np.where(np.array(out)[..., 3] > ALPHA_FLOOR)
         print(
@@ -164,7 +230,8 @@ def main(paths, shared_scale=False):
 if __name__ == "__main__":
     argv = sys.argv[1:]
     shared = "--shared-scale" in argv
+    cut = "--keep-background" not in argv
     paths = [a for a in argv if not a.startswith("--")]
     if not paths:
         sys.exit(__doc__)
-    main(paths, shared_scale=shared)
+    main(paths, shared_scale=shared, cut_out=cut)
