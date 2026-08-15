@@ -658,3 +658,43 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }/* ---------- shape grid v2 ---------- */.FeaturedProductsCard .mediaContainer{overflow:clip}.FeaturedProductsCard .sh{position:absolute;display:block}.FeaturedProductsCard .overlayer{display:none !important}.FeaturedProductsCard[data-bg="light"] .content-wrapper,.FeaturedProductsCard[data-bg="light"] .icons{color:#221F20}.FeaturedProductsCard[data-bg="dark"] .content-wrapper,.FeaturedProductsCard[data-bg="dark"] .icons{color:#F1E4C7}.FeaturedProductsCard:hover .title{color:inherit}@media(max-width:1050px){.Header-nav{display:none}}
 /* footer keeps its slide-up; the nav uses the scramble instead */
 .FooterLink:hover .label-swap>span{transform:translateY(-100%)}
+
+
+/* ---------- next-up placeholder ----------------------------------------
+   The slot is COMING SOON / TBA and its image does not exist yet, so rather
+   than render an empty box it reads as pending: a slow sweep across the
+   tile with the mark breathing underneath. Motion is off for anyone who
+   asks for reduced motion. ------------------------------------------- */
+.HeroIntro .bh-nextup-thumb.is-pending{
+  position:relative;
+  background:rgba(255,255,255,.10);
+}
+.HeroIntro .bh-nextup-thumb.is-pending::before{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(115deg,
+    rgba(255,255,255,0)   35%,
+    rgba(255,255,255,.28) 50%,
+    rgba(255,255,255,0)   65%);
+  transform:translateX(-120%);
+  animation:brk-nextup-sweep 2.6s ease-in-out infinite;
+}
+.HeroIntro .bh-nextup-thumb.is-pending::after{
+  content:"";
+  position:absolute;top:50%;left:50%;
+  width:26%;aspect-ratio:1;margin:-13% 0 0 -13%;
+  background:rgba(255,255,255,.85);
+  animation:brk-nextup-pulse 2.6s ease-in-out infinite;
+}
+@keyframes brk-nextup-sweep{
+  0%{transform:translateX(-120%)}
+  60%,100%{transform:translateX(120%)}
+}
+@keyframes brk-nextup-pulse{
+  0%,100%{opacity:.85;transform:scale(1)}
+  50%{opacity:.45;transform:scale(.82)}
+}
+@media (prefers-reduced-motion:reduce){
+  .HeroIntro .bh-nextup-thumb.is-pending::before{animation:none;opacity:0}
+  .HeroIntro .bh-nextup-thumb.is-pending::after{animation:none}
+}
