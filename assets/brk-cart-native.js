@@ -1,10 +1,10 @@
 /* ==========================================================================
    BRKFST — native Shopify cart bridge (theme build only)
    The site's own "ADD TO CART" handler keeps its exact animation
-   ("ADDED ✓" flash, size-outline nudge). This script ALSO performs the
-   real add against Shopify's AJAX Cart API, and shows a small cart chip
-   (site-styled, bottom-right) once the cart has items. Zero visual change
-   until something is in the cart. Same public API as js/shopify.js:
+   ("ADDED checkmark" flash, size-outline nudge). This script ALSO performs
+   the real add against Shopify's AJAX Cart API. It adds no UI of its own --
+   it only makes the buttons the theme already has do something. Same public
+   API as js/shopify.js:
    window.BRKCart { add, fetchCart, setQty, update, count, money }.
    ========================================================================== */
 (function () {
@@ -75,73 +75,15 @@
     return c.item_count;
   }
 
-  /* ---------- floating cart button (bottom-right) ----------
-     The site has no cart link in its nav, so this is the only way to reach
-     /cart while shopping. Always on screen, site-styled; shows the live item
-     count and subtotal once the cart has something in it. Suppressed on
-     /cart and /checkout, where it would be redundant. ---------- */
-  var CART_ICON =
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
-    'stroke-linecap="square" aria-hidden="true">' +
-    '<path d="M3 4h2.2l2.2 10.4h9.6L19 7H6"/>' +
-    '<circle cx="9" cy="19" r="1.4" fill="currentColor" stroke="none"/>' +
-    '<circle cx="17" cy="19" r="1.4" fill="currentColor" stroke="none"/></svg>';
-
-  var fab = null, fabLabel = null, lastCount = null;
-
-  function buildFab() {
-    if (fab || /^\/(cart|checkout)/.test(location.pathname)) return;
-
-    var css = document.createElement("style");
-    css.textContent =
-      ".brk-cart-fab{position:fixed;right:1rem;z-index:9990;" +
-      "bottom:calc(1rem + env(safe-area-inset-bottom,0px));" +
-      "display:inline-flex;align-items:center;gap:.5rem;" +
-      "background:var(--brk-accent,#ffe500);color:#111;text-decoration:none;" +
-      "padding:.8rem 1.1rem;font:inherit;font-weight:500;font-size:.9rem;" +
-      "line-height:1;letter-spacing:.02em;white-space:nowrap;" +
-      "box-shadow:0 2px 16px rgba(0,0,0,.24)}" +
-      ".brk-cart-fab:hover{opacity:.88}" +
-      ".brk-cart-fab svg{width:1.15rem;height:1.15rem;flex:none;display:block}" +
-      "@media(prefers-reduced-motion:no-preference){" +
-      ".brk-cart-fab{transition:transform .18s ease}" +
-      ".brk-cart-fab.is-bumped{transform:scale(1.07)}}";
-    document.head.appendChild(css);
-
-    fab = document.createElement("a");
-    fab.href = "/cart";
-    fab.className = "brk-cart-fab";
-    fab.setAttribute("aria-live", "polite");
-    fab.innerHTML = CART_ICON + '<span class="t">CART</span>';
-    fabLabel = fab.querySelector(".t");
-    document.body.appendChild(fab);
-  }
-
-  function paintFab(n, subtotal) {
-    if (!fab) return;
-    fabLabel.textContent = n > 0 ? "CART (" + n + ")  " + money(subtotal) : "CART";
-    fab.setAttribute("aria-label",
-      n > 0 ? "Cart, " + n + " item" + (n === 1 ? "" : "s") + ", view cart" : "View cart");
-    if (lastCount !== null && n > lastCount) {         /* nudge on add */
-      fab.classList.add("is-bumped");
-      setTimeout(function () { fab.classList.remove("is-bumped"); }, 190);
-    }
-    lastCount = n;
-  }
-
   async function update() {
     try {
       var c = await getJSON("/cart.js");
       var n = c.item_count;
-      buildFab();
-      paintFab(n, c.items_subtotal_price / 100);
-      /* also feed the site's own "(N ITEMS)" indicator where one exists */
-      document.querySelectorAll("[data-brk-cart-count]").forEach(function (e) { e.textContent = n; });
-      document.querySelectorAll("*").forEach(function (el) {
-        if (el.children.length === 0 && /\(\s*\d+\s*ITEMS?\s*\)/i.test(el.textContent)) {
-          el.textContent = el.textContent.replace(/\(\s*\d+(\s*ITEMS?\s*)\)/i, "(" + n + "$1)");
-        }
-      });
+      /* Feed the theme's own cart button. It ships with a <span sf-cart-count>
+         for exactly this, so fill that rather than scanning every element on
+         the page for text shaped like "(2 ITEMS)". */
+      document.querySelectorAll("[sf-cart-count], [data-brk-cart-count]")
+        .forEach(function (e) { e.textContent = n; });
     } catch (e) {}
   }
 
@@ -149,6 +91,18 @@
      The page's own inline handler runs the visual feedback; this one does
      the real add. It respects the same guard (no size selected -> no add,
      the inline handler already shows the outline nudge). ---------- */
+  /* ---------- make the theme's own cart button work ----------
+     The markup ships a [sf-cart-open] button and an [sf-cart-popup] drawer,
+     but the SF-Commerce script that pairs them is not loaded in this build,
+     so the drawer can never get its .sf-cart-opened class and the button just
+     swallows taps. Send it to /cart, which is a real page in this theme. ---- */
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("[sf-cart-open], .cart-button") : null;
+    if (!t) return;
+    e.preventDefault();
+    location.href = "/cart";
+  });
+
   var pm = location.pathname.match(/^\/products\/([^\/?#]+)/);
   var HANDLE = pm ? decodeURIComponent(pm[1]) : null;
 
