@@ -79,13 +79,11 @@
     try {
       var c = await getJSON("/cart.js");
       var n = c.item_count;
-      /* also feed the site's own "(N ITEMS)" indicator where one exists */
-      document.querySelectorAll("[data-brk-cart-count]").forEach(function (e) { e.textContent = n; });
-      document.querySelectorAll("*").forEach(function (el) {
-        if (el.children.length === 0 && /\(\s*\d+\s*ITEMS?\s*\)/i.test(el.textContent)) {
-          el.textContent = el.textContent.replace(/\(\s*\d+(\s*ITEMS?\s*)\)/i, "(" + n + "$1)");
-        }
-      });
+      /* Feed the theme's own cart button. It ships with a <span sf-cart-count>
+         for exactly this, so fill that rather than scanning every element on
+         the page for text shaped like "(2 ITEMS)". */
+      document.querySelectorAll("[sf-cart-count], [data-brk-cart-count]")
+        .forEach(function (e) { e.textContent = n; });
     } catch (e) {}
   }
 
@@ -93,6 +91,18 @@
      The page's own inline handler runs the visual feedback; this one does
      the real add. It respects the same guard (no size selected -> no add,
      the inline handler already shows the outline nudge). ---------- */
+  /* ---------- make the theme's own cart button work ----------
+     The markup ships a [sf-cart-open] button and an [sf-cart-popup] drawer,
+     but the SF-Commerce script that pairs them is not loaded in this build,
+     so the drawer can never get its .sf-cart-opened class and the button just
+     swallows taps. Send it to /cart, which is a real page in this theme. ---- */
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("[sf-cart-open], .cart-button") : null;
+    if (!t) return;
+    e.preventDefault();
+    location.href = "/cart";
+  });
+
   var pm = location.pathname.match(/^\/products\/([^\/?#]+)/);
   var HANDLE = pm ? decodeURIComponent(pm[1]) : null;
 
