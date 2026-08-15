@@ -77,9 +77,11 @@
 
   /* ---------- floating cart button (bottom-right) ----------
      The site has no cart link in its nav, so this is the only way to reach
-     /cart while shopping. Always on screen, site-styled; shows the live item
-     count and subtotal once the cart has something in it. Suppressed on
-     /cart and /checkout, where it would be redundant. ---------- */
+     /cart while shopping. Deliberately understated to sit with the rest of
+     the site: a small monochrome disc with just the cart glyph, no accent
+     colour and no count or subtotal on screen. The label is kept in the DOM
+     but visually hidden, so screen readers still get the live count.
+     Suppressed on /cart and /checkout, where it would be redundant. ---- */
   var CART_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
     'stroke-linecap="square" aria-hidden="true">' +
@@ -96,13 +98,14 @@
     css.textContent =
       ".brk-cart-fab{position:fixed;right:1rem;z-index:9990;" +
       "bottom:calc(1rem + env(safe-area-inset-bottom,0px));" +
-      "display:inline-flex;align-items:center;gap:.5rem;" +
-      "background:var(--brk-accent,#ffe500);color:#111;text-decoration:none;" +
-      "padding:.8rem 1.1rem;font:inherit;font-weight:500;font-size:.9rem;" +
-      "line-height:1;letter-spacing:.02em;white-space:nowrap;" +
-      "box-shadow:0 2px 16px rgba(0,0,0,.24)}" +
-      ".brk-cart-fab:hover{opacity:.88}" +
-      ".brk-cart-fab svg{width:1.15rem;height:1.15rem;flex:none;display:block}" +
+      "display:inline-flex;align-items:center;justify-content:center;" +
+      "width:2.75rem;height:2.75rem;border-radius:50%;" +
+      "background:#0A0A0A;color:#fff;text-decoration:none;" +
+      "box-shadow:0 2px 10px rgba(0,0,0,.18)}" +
+      ".brk-cart-fab:hover{opacity:.85}" +
+      ".brk-cart-fab .t{position:absolute;width:1px;height:1px;overflow:hidden;" +
+      "clip:rect(0 0 0 0);white-space:nowrap}" +
+      ".brk-cart-fab svg{width:1.2rem;height:1.2rem;flex:none;display:block}" +
       "@media(prefers-reduced-motion:no-preference){" +
       ".brk-cart-fab{transition:transform .18s ease}" +
       ".brk-cart-fab.is-bumped{transform:scale(1.07)}}";
@@ -119,7 +122,7 @@
 
   function paintFab(n, subtotal) {
     if (!fab) return;
-    fabLabel.textContent = n > 0 ? "CART (" + n + ")  " + money(subtotal) : "CART";
+    fabLabel.textContent = n > 0 ? "Cart, " + n + " items, " + money(subtotal) : "Cart";
     fab.setAttribute("aria-label",
       n > 0 ? "Cart, " + n + " item" + (n === 1 ? "" : "s") + ", view cart" : "View cart");
     if (lastCount !== null && n > lastCount) {         /* nudge on add */

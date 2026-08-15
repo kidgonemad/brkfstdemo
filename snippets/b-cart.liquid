@@ -261,7 +261,7 @@
 <h1 class="brk-cart-h">CART ({{ cart.item_count }} ITEM{% if cart.item_count != 1 %}S{% endif %})</h1>
 {% if cart.item_count == 0 %}
 <p>Your cart is empty.</p>
-<a class="brk-cart-btn is-pay" href="/products">SHOP PRODUCTS &#8618;</a>
+<a class="brk-cart-btn is-pay" href="/products">SHOP PRODUCTS &#8618;&#xFE0E;</a>
 {% else %}
 <form action="/cart" method="post" novalidate>
 {% for item in cart.items %}
@@ -276,7 +276,7 @@
 <div class="brk-cart-sub"><span>SUBTOTAL</span><span>{{ cart.total_price | money }}</span></div>
 <div class="brk-cart-acts">
 <button type="submit" name="update" class="brk-cart-btn is-upd">UPDATE</button>
-<button type="submit" name="checkout" class="brk-cart-btn is-pay">CHECKOUT &#8618;</button>
+<button type="submit" name="checkout" class="brk-cart-btn is-pay">CHECKOUT &#8618;&#xFE0E;</button>
 </div>
 </form>
 {% endif %}
