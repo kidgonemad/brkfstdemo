@@ -506,7 +506,10 @@
   position:relative;display:block;
   height:100%;
   background-color:var(--tile,#324E44);
-  background-size:cover;background-position:center;
+  /* the photo fills the tile; the flat colour stays underneath as the
+     loading state, so the tile never flashes empty */
+  background-image:var(--tile-img,none);
+  background-size:cover;background-position:center;background-repeat:no-repeat;
   text-decoration:none;overflow:hidden;
   /* notched top-right corner, as in the reference */
   clip-path:polygon(0 0, calc(100% - 34px) 0, 100% 34px, 100% 100%, 0 100%);

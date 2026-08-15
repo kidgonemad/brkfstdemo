@@ -253,16 +253,16 @@
   <div class="container">
     <h2 class="brk-collections_title">Collections</h2>
     <div class="brk-collections_grid">
-      <a class="brk-col-tile is-a" href="/products?cat=new" style="--tile:#FFCC01;">
+      <a class="brk-col-tile is-a" href="/products?cat=new" style="--tile:#FFCC01;--tile-img:url({{ 'brk-editorial_band-top.jpg' | asset_url }});">
         <span class="brk-col-label">New Arrivals <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
       </a>
-      <a class="brk-col-tile is-b" href="/products?cat=classics" style="--tile:#545454;">
+      <a class="brk-col-tile is-b" href="/products?cat=classics" style="--tile:#545454;--tile-img:url({{ 'brk-editorial_gallery-03.jpg' | asset_url }});">
         <span class="brk-col-label">Classics <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
       </a>
-      <a class="brk-col-tile is-c" href="/products" style="--tile:#0E8C9B;">
+      <a class="brk-col-tile is-c" href="/products" style="--tile:#0E8C9B;--tile-img:url({{ 'brk-editorial_accessories.jpg' | asset_url }});">
         <span class="brk-col-label">Accessories <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
       </a>
-      <a class="brk-col-tile is-d" href="/tobacco" style="--tile:#33421C;">
+      <a class="brk-col-tile is-d" href="/tobacco" style="--tile:#33421C;--tile-img:url({{ 'brk-editorial_tobacco.jpg' | asset_url }});">
         <span class="brk-col-label">Tobacco <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
       </a>
     </div>
@@ -654,7 +654,10 @@ fs-list
   position:relative;display:block;
   height:100%;
   background-color:var(--tile,#324E44);
-  background-size:cover;background-position:center;
+  /* the photo fills the tile; the flat colour stays underneath as the
+     loading state, so the tile never flashes empty */
+  background-image:var(--tile-img,none);
+  background-size:cover;background-position:center;background-repeat:no-repeat;
   text-decoration:none;overflow:hidden;
   /* notched top-right corner, as in the reference */
   clip-path:polygon(0 0, calc(100% - 34px) 0, 100% 34px, 100% 100%, 0 100%);
