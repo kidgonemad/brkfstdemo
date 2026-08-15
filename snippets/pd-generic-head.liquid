@@ -500,8 +500,7 @@
 }
 .brk-collections_grid .is-a{grid-column:span 1;}
 .brk-collections_grid .is-b{grid-column:span 2;}
-.brk-collections_grid .is-c{grid-column:span 2;}
-.brk-collections_grid .is-d{grid-column:span 1;}
+.brk-collections_grid .is-c{grid-column:span 3;}
 .brk-col-tile{
   position:relative;display:block;
   height:100%;
@@ -555,11 +554,11 @@
 @media(max-width:720px){
   .brk-collections_grid{grid-template-columns:1fr;grid-auto-rows:clamp(160px,42vw,240px);}
   .brk-collections_grid .is-a,.brk-collections_grid .is-b,
-  .brk-collections_grid .is-c,.brk-collections_grid .is-d{grid-column:span 1;}
+  .brk-collections_grid .is-c{grid-column:span 1;}
   .brk-col-tile{clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);}
 }
 @media (prefers-reduced-motion:reduce){.brk-col-tile{transition:none;}}
-</style><style id="brk-coll-scoped-pdp">section.brk-collections{background:#E8D8C9 !important;padding-top:clamp(40px,5vw,72px) !important;}section.brk-collections .brk-collections_title{color:#0A0A0A !important;}section.brk-collections .text-style-tag-regular,section.brk-collections p,section.brk-collections h2{color:#0A0A0A !important;}.brk-col-tile.is-d .brk-col-label{color:#FFFFFF !important;}</style><style id="brk-pdp-gap">
+</style><style id="brk-coll-scoped-pdp">section.brk-collections{background:#E8D8C9 !important;padding-top:clamp(40px,5vw,72px) !important;}section.brk-collections .brk-collections_title{color:#0A0A0A !important;}section.brk-collections .text-style-tag-regular,section.brk-collections p,section.brk-collections h2{color:#0A0A0A !important;}</style><style id="brk-pdp-gap">
 /* tighten the gap between "you might also like" and COLLECTIONS (must come
    AFTER the reused collections CSS to win) */
 .section_default.is-overflow-hidden > .container > .padding-global.padding-section{padding-bottom:1.2rem!important;}
@@ -571,15 +570,6 @@ section.brk-collections{padding-top:1.6rem!important;}
   section.brk-collections .brk-collections_grid .is-a{grid-column:span 1!important;} /* New Arrivals */
   section.brk-collections .brk-collections_grid .is-b{grid-column:span 1!important;} /* Classics */
   section.brk-collections .brk-collections_grid .is-c{grid-column:span 2!important;} /* Accessories full */
-  section.brk-collections .brk-collections_grid .is-d{grid-column:span 2!important;} /* Tobacco full */
   section.brk-collections .brk-col-label{font-size:1rem!important;padding:.8em .95em!important;}
-}
-</style><style id="brk-lock-tabs">
-/* TOBACCO + CANNABIS locked for now — visible but not clickable */
-.Header a[href="/tobacco"],.Header a[href="/cannabis"],
-.NavItem[href="/tobacco"],.NavItem[href="/cannabis"],
-.Directory a[href="/tobacco"],.Directory a[href="/cannabis"],
-.menu_link_item[href="/tobacco"],.menu_link_item[href="/cannabis"]{
-  pointer-events:none!important;opacity:.35!important;cursor:default!important;
 }
 </style>

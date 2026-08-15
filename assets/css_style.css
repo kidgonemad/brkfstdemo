@@ -229,7 +229,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .FeaturedProductsCard .sh{transition:none}
 }
 
-/* ---------- insignia on the GARDEN / SUPPORT cards (no physics —
+/* ---------- insignia on the SUPPORT cards (no physics —
    just a hover flourish; the whole card is the link) ---------- */
 .FeaturedProductsCard .insig{position:absolute;display:block}
 .FeaturedProductsCard .insig img{width:100%;height:100%;object-fit:contain;display:block}
@@ -344,6 +344,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .FeaturedProductsCard.wide{grid-column:span 8}
 .FeaturedProductsCard.tall{grid-area:span 2/span 4}
 .FeaturedProductsCard.half{grid-column:span 6}
+.FeaturedProductsCard.full{grid-column:1/-1}
 
 .FeaturedProductsCard .mediaContainer{
   position:absolute;inset:0;background:var(--tile,#221F20);
@@ -523,7 +524,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 
 /* ---------- media panels ---------- */
-/* matches .garden: light text on a dark ground (also better contrast on --band) */
+/* light text on a dark ground (also better contrast on --band) */
 /* ---------- footer ---------- */
 .Footer{background:var(--black);color:var(--white);padding:4rem var(--side) 2rem}
 .Footer-top{
@@ -609,7 +610,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .FeaturedProductsCard,
   .FeaturedProductsCard.wide,
   .FeaturedProductsCard.tall,
-  .FeaturedProductsCard.half{grid-column:1/-1;grid-row:auto;aspect-ratio:1;min-height:0}
+  .FeaturedProductsCard.half,
+  .FeaturedProductsCard.full{grid-column:1/-1;grid-row:auto;aspect-ratio:1;min-height:0}
   .Announcement-media{height:44dvh}
   .Announcement-bottom{grid-template-columns:1fr;gap:2rem}
   .Events-row{grid-template-columns:1fr;gap:2rem}
