@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+
+# Model cache pulled down by tools/normalize-product-photos.py
+.u2net/
