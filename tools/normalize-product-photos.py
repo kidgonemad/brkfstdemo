@@ -91,6 +91,9 @@ def _rembg_session():
 def trim_letterbox(rgba):
     """Crop solid dark bars off the edges of a frame."""
     luma = rgba[..., :3].mean(axis=2)
+    # transparent pixels have no meaningful colour; treat them as bright so a
+    # cleared row is never mistaken for a dark bar
+    luma = np.where(rgba[..., 3] > ALPHA_FLOOR, luma, 255)
     top, bottom, left, right = 0, rgba.shape[0], 0, rgba.shape[1]
     while top < bottom and luma[top].mean() < LETTERBOX_MAX_MEAN:
         top += 1
@@ -120,10 +123,14 @@ def drop_background(rgba):
     """Return rgba with the studio sweep segmented away."""
     from rembg import remove
 
-    rgba = trim_letterbox(rgba)
     if already_knocked_out(rgba):
+        # Never trim an already-transparent frame. Cleared pixels carry black
+        # RGB, so trim_letterbox reads every transparent row as a letterbox bar
+        # and eats into the product -- it took the base clean off the lighter,
+        # cropping 1536x1536 down to 723x926.
         out = rgba.copy()
     else:
+        rgba = trim_letterbox(rgba)
         out = np.array(
             remove(
                 Image.fromarray(rgba, "RGBA"), session=_rembg_session()
