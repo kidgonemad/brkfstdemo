@@ -41,7 +41,10 @@ still normalised, so those products line up with the rest of the grid, but
 nothing is cut out. The accessories (ashtray, socks, lighters) use this.
 
 Usage:
-    normalize-product-photos.py [--shared-scale] [--keep-background] front.png back.png [...]
+    normalize-product-photos.py [--shared-scale] [--keep-background] [--square]
+                                front.png back.png [...]
+
+--square frames onto a 1:1 canvas instead of the catalogue's 1264x1175.
 
 Files are rewritten in place. Widths are deliberately *not* forced to match:
 an open-front jacket is wider than its back and squashing it to match would
@@ -166,7 +169,7 @@ def garment_box(rgba):
     return xs.min(), ys.min(), xs.max() + 1, ys.max() + 1
 
 
-def place(rgba, scale, background_alpha=0):
+def place(rgba, scale, background_alpha=0, canvas=None):
     """Scale the garment by `scale` and centre it on the shared canvas.
 
     The requested scale comes from a height target, but a wide flat subject --
@@ -175,20 +178,23 @@ def place(rgba, scale, background_alpha=0):
     whole product on the canvas; such a view simply ends up shorter than the
     height target, which is what it should look like next to a face-on view.
     """
+    canvas_size = canvas or CANVAS
     x0, y0, x1, y1 = garment_box(rgba)
     cropped = Image.fromarray(rgba[y0:y1, x0:x1], "RGBA")
 
-    scale = min(scale, CANVAS[0] / cropped.width)
+    scale = min(scale, canvas_size[0] / cropped.width)
     width = max(1, round(cropped.width * scale))
     height = max(1, round(cropped.height * scale))
     cropped = cropped.resize((width, height), Image.LANCZOS)
 
-    canvas = Image.new("RGBA", CANVAS, (255, 255, 255, background_alpha))
+    canvas_img = Image.new("RGBA", canvas_size, (255, 255, 255, background_alpha))
     # No mask on the paste: the canvas is already empty, and passing `cropped`
     # as its own mask would multiply alpha by itself, hardening every
     # anti-aliased edge and shifting the measured bounding box.
-    canvas.paste(cropped, ((CANVAS[0] - width) // 2, (CANVAS[1] - height) // 2))
-    return canvas
+    canvas_img.paste(
+        cropped, ((canvas_size[0] - width) // 2, (canvas_size[1] - height) // 2)
+    )
+    return canvas_img
 
 
 def keep_background(rgba):
@@ -212,7 +218,7 @@ def keep_background(rgba):
     return out
 
 
-def main(paths, shared_scale=False, cut_out=True):
+def main(paths, shared_scale=False, cut_out=True, square=False):
     cleaned = []
     for path in paths:
         rgba = np.array(Image.open(path).convert("RGBA"))
@@ -222,7 +228,8 @@ def main(paths, shared_scale=False, cut_out=True):
         verb = "after knockout" if cut_out else "located (kept on white)"
         print(f"{path}: subject {box[2] - box[0]}x{box[3] - box[1]} {verb}")
 
-    target = CANVAS[1] * GARMENT_HEIGHT_RATIO
+    canvas = (CANVAS[1], CANVAS[1]) if square else CANVAS
+    target = canvas[1] * GARMENT_HEIGHT_RATIO
     # Default: each view gets its own scale so they all stand the same height.
     # --shared-scale instead pins the tallest view to the target and scales the
     # rest by the same factor, keeping their true relative sizes.
@@ -230,7 +237,9 @@ def main(paths, shared_scale=False, cut_out=True):
 
     for path, rgba, box in cleaned:
         scale = target / (tallest if shared_scale else box[3] - box[1])
-        out = place(rgba, scale, background_alpha=0 if cut_out else 255)
+        out = place(
+            rgba, scale, background_alpha=0 if cut_out else 255, canvas=canvas
+        )
         out.save(path, optimize=True)
         ys, xs = np.where(np.array(out)[..., 3] > ALPHA_FLOOR)
         print(
@@ -244,7 +253,8 @@ if __name__ == "__main__":
     argv = sys.argv[1:]
     shared = "--shared-scale" in argv
     cut = "--keep-background" not in argv
+    square = "--square" in argv
     paths = [a for a in argv if not a.startswith("--")]
     if not paths:
         sys.exit(__doc__)
-    main(paths, shared_scale=shared, cut_out=cut)
+    main(paths, shared_scale=shared, cut_out=cut, square=square)
