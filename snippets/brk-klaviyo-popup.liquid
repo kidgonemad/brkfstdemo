@@ -1,0 +1,60 @@
+{%- comment -%}
+  Email capture for the password page, posting straight to Klaviyo.
+
+  Renders ONLY when both the public key and the list ID are set in
+  Theme settings → Klaviyo. A form with nowhere to post is worse than no
+  form at all — the theme already had one of those in the site footer.
+
+  Uses Klaviyo's client-side Subscriptions API, which is built for browser
+  use and authenticates with the PUBLIC key alone. No private key is ever
+  exposed, and no server round-trip is needed.
+{%- endcomment -%}
+
+{%- assign kl_key = settings.klaviyo_public_key | strip -%}
+{%- assign kl_list = settings.klaviyo_list_id | strip -%}
+
+{%- if settings.klaviyo_popup_enabled and kl_key != blank -%}
+<div class="nl" id="nl" hidden
+     data-key="{{ kl_key | escape }}"
+     data-list="{{ kl_list | escape }}"
+     data-delay="{{ settings.klaviyo_popup_delay | default: 6 }}">
+  <div class="nl-veil" data-nl-close></div>
+
+  {%- assign nl_heading = settings.klaviyo_popup_heading | default: 'JOIN THE X FORCE' -%}
+  {%- assign nl_body = settings.klaviyo_popup_body | default: 'Be the first through the door.' -%}
+
+  {%- comment -%}
+    aria-label carries the finished heading, so assistive tech announces the
+    real title even while the visible text is still scrambling.
+  {%- endcomment -%}
+  <div class="nl-panel" role="dialog" aria-modal="true" aria-label="{{ nl_heading | escape }}">
+
+    {%- comment -%} the reticle: 4 ticks that start as a small square and open out {%- endcomment -%}
+    <div class="nl-frame" aria-hidden="true">
+      <span class="nl-c tl"></span><span class="nl-c tr"></span>
+      <span class="nl-c bl"></span><span class="nl-c br"></span>
+    </div>
+
+    <div class="nl-fill" aria-hidden="true"></div>
+
+    <div class="nl-body">
+      <button class="nl-x" type="button" data-nl-close aria-label="Close">
+        <svg viewBox="0 0 7 7" width="12" height="12" aria-hidden="true">
+          <path fill="currentColor" d="M3.14 2.51 5.66 0l.63.63-2.52 2.51 2.52 2.52-.63.63-2.52-2.52L.63 6.29 0 5.66l2.51-2.52L0 .63.63 0z"/>
+        </svg>
+      </button>
+
+      <h2 class="nl-h" id="nl-h" data-scramble>{{ nl_heading }}</h2>
+      <p class="nl-b" data-scramble>{{ nl_body }}</p>
+
+      <form class="nl-form" novalidate>
+      <label class="nl-lab" for="nl-email">Email address</label>
+      <input class="nl-in" id="nl-email" type="email" name="email" required
+             autocomplete="email" inputmode="email" placeholder="you@domain.com">
+        <button class="nl-go" type="submit">SUBSCRIBE</button>
+        <p class="nl-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</div>
+{%- endif -%}

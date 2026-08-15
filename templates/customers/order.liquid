@@ -1,0 +1,1 @@
+{% render 'brk-shell-open' %}<h1 class="brk-stub-title">Order {{ order.name }}</h1>{% for line_item in order.line_items %}<p>{{ line_item.title }} × {{ line_item.quantity }}</p>{% endfor %}{% render 'brk-shell-close' %}

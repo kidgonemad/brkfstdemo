@@ -1,0 +1,115 @@
+/* ==========================================================================
+   BRKFST — About: infinite scroll-scrubbed field
+   Mechanism: Lenis (infinite) → one paused GSAP master timeline → a single
+   ScrollTrigger maps scroll progress straight onto it. Scroll IS the playhead.
+   Palette: Army Black / Tan / Field / Gold only — no orange, no colour drift.
+   ========================================================================== */
+:root{
+  --f-black:#010101; --f-army:#221F20; --f-tan:#F1E4C7;
+  --f-field:#727365; --f-field2:#BFB8A6; --f-gray:#565557; --f-gold:#FFCC01;
+  --f-ease:cubic-bezier(.215,.62,.34,1);
+}
+html,body{height:100%}
+body{
+  background:var(--f-black);color:var(--f-tan);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* the scroll runway — gives the timeline room to scrub */
+.field-runway{height:640vh;pointer-events:none}
+
+/* everything is drawn on one fixed stage */
+.field-stage{
+  position:fixed;inset:4.5rem 0 0;   /* clears the sticky header */
+  overflow:hidden;z-index:1;
+}
+.field-panel{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  padding:0 clamp(1.25rem,6vw,7rem);
+  opacity:0;will-change:transform,opacity;
+}
+
+/* ---------- checkered / dot ground (black & white only) ---------- */
+.field-grid{
+  position:absolute;inset:-10%;opacity:0;
+  background-image:
+    linear-gradient(rgba(241,228,199,.10) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(241,228,199,.10) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.field-dots{
+  position:absolute;inset:-10%;opacity:0;
+  background-image:radial-gradient(rgba(241,228,199,.22) 1.6px,transparent 1.8px);
+  background-size:26px 26px;
+}
+
+/* ---------- intro: the B mark draws in on load ---------- */
+.field-intro{
+  position:fixed;inset:0;z-index:40;background:var(--f-black);
+  display:grid;place-items:center;
+}
+.field-mark{
+  width:89px;height:42px;
+  background:url(assets_brk-logo-sprite.png) 0 0/2136px 42px no-repeat;
+  transform:scale(2.4);
+}
+.field-intro.is-done{opacity:0;pointer-events:none;transition:opacity .5s var(--f-ease)}
+
+/* ---------- type ---------- */
+.f-head{
+  font-weight:800;text-transform:uppercase;text-align:center;
+  font-size:clamp(1.5rem,4.2vw,3.6rem);line-height:1.02;letter-spacing:-.02em;
+  max-width:18ch;color:var(--f-tan);
+}
+.f-body{
+  text-align:center;max-width:52ch;line-height:1.5;
+  font-size:clamp(.95rem,1.25vw,1.15rem);color:var(--f-field2);
+}
+.f-label{
+  font-family:'SF Mono',Menlo,Consolas,monospace;
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--f-field2);display:flex;align-items:center;gap:.5rem;
+}
+.f-label:before{content:"";width:.45em;height:.45em;background:currentColor;flex:0 0 auto}
+
+/* ---------- experience: video pops up with its caption ---------- */
+.f-exp{display:flex;gap:clamp(1rem,3vw,2.5rem);align-items:center;flex-wrap:wrap;justify-content:center}
+.f-exp-media{
+  width:clamp(230px,30vw,420px);aspect-ratio:1;overflow:hidden;
+  border-radius:2px;background:var(--f-army);flex:0 0 auto;
+}
+.f-exp-media video{width:100%;height:100%;object-fit:cover;display:block}
+.f-exp-copy{max-width:30ch;display:flex;flex-direction:column;gap:.8rem}
+.f-exp-copy p{
+  background:#333;padding:.9rem 1.05rem;border-radius:2px;
+  line-height:1.45;font-size:clamp(.85rem,1.05vw,1rem);color:var(--f-tan);
+}
+
+/* ---------- founders ---------- */
+.f-founders{display:flex;gap:clamp(1.5rem,6vw,6rem);flex-wrap:wrap;justify-content:center}
+.f-founder{max-width:24ch;display:flex;flex-direction:column;gap:.7rem}
+.f-founder p{line-height:1.45;font-size:clamp(.9rem,1.1vw,1.05rem);color:var(--f-tan)}
+
+/* ---------- closing mark, bottom right ---------- */
+.f-close{
+  position:absolute;right:clamp(1.25rem,4vw,4rem);bottom:clamp(1.5rem,5vh,3.5rem);
+  text-align:right;display:flex;flex-direction:column;gap:.35rem;
+}
+.f-close b{font-size:clamp(1rem,1.6vw,1.45rem);font-weight:800;letter-spacing:-.01em;color:var(--f-tan)}
+.f-close span{font-size:.8rem;color:var(--f-field2)}
+
+/* scroll hint */
+.f-hint{
+  position:absolute;left:50%;bottom:2rem;transform:translateX(-50%);
+  font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.66rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--f-field);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .field-runway{height:auto}
+  .field-stage{position:static;inset:auto}
+  .field-panel{position:static;opacity:1;min-height:auto;padding:4rem 1.25rem}
+  .field-intro{display:none}
+}

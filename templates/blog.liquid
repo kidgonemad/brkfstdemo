@@ -1,0 +1,1 @@
+{% render 'brk-shell-open' %}<h1 class="brk-stub-title">{{ blog.title }}</h1>{% for article in blog.articles %}<p><a href="{{ article.url }}">{{ article.title }}</a></p>{% endfor %}{% render 'brk-shell-close' %}

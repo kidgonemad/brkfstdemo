@@ -1,0 +1,1 @@
+{% render 'brk-shell-open' %}<h1 class="brk-stub-title">Search</h1><form action="/search" method="get"><input type="search" name="q" value="{{ search.terms | escape }}"><button type="submit">SEARCH</button></form>{% if search.performed %}{% for item in search.results %}<p><a href="{{ item.url }}">{{ item.title }}</a></p>{% endfor %}{% endif %}{% render 'brk-shell-close' %}
