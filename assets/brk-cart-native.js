@@ -78,9 +78,12 @@
   /* ---------- floating cart button (bottom-right) ----------
      The site has no cart link in its nav, so this is the only way to reach
      /cart while shopping. Deliberately understated to sit with the rest of
-     the site: a small monochrome disc with just the cart glyph, no accent
-     colour and no count or subtotal on screen. The label is kept in the DOM
-     but visually hidden, so screen readers still get the live count.
+     the site: just the cart glyph, no disc, no accent colour, and no count
+     or subtotal on screen. It floats over sections that are white on some
+     pages and black on others, so it uses mix-blend-mode:difference -- the
+     same trick the theme's own overlay markers use -- to stay legible on
+     both without needing a plate behind it. The label is kept in the DOM but
+     visually hidden, so screen readers still get the live count.
      Suppressed on /cart and /checkout, where it would be redundant. ---- */
   var CART_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
@@ -99,9 +102,8 @@
       ".brk-cart-fab{position:fixed;right:1rem;z-index:9990;" +
       "bottom:calc(1rem + env(safe-area-inset-bottom,0px));" +
       "display:inline-flex;align-items:center;justify-content:center;" +
-      "width:2.75rem;height:2.75rem;border-radius:50%;" +
-      "background:#0A0A0A;color:#fff;text-decoration:none;" +
-      "box-shadow:0 2px 10px rgba(0,0,0,.18)}" +
+      "padding:.5rem;background:none;color:#fff;text-decoration:none;" +
+      "mix-blend-mode:difference}" +
       ".brk-cart-fab:hover{opacity:.85}" +
       ".brk-cart-fab .t{position:absolute;width:1px;height:1px;overflow:hidden;" +
       "clip:rect(0 0 0 0);white-space:nowrap}" +
