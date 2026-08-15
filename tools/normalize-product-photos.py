@@ -14,8 +14,8 @@ Two jobs, in order:
    tolerance trades a chewed garment for a grey halo; there is no setting that
    fixes both, because the two are genuinely the same colour.
 
-   So the knockout is done by segmentation (rembg / u2net), which decides from
-   shape rather than colour. Everything downstream still works off the alpha
+   So the knockout is done by segmentation (rembg / BiRefNet), which decides
+   from shape rather than colour. Everything downstream still works off the alpha
    channel, so the rest of this file is unchanged.
 
    Frames that arrive with a black letterbox bar along one edge get trimmed
@@ -70,6 +70,12 @@ SPECK_RATIO = 0.005
 # interior is forced opaque.
 EDGE_FEATHER = 3
 
+# birefnet-general over u2net: on the same three test frames u2net left the
+# lighter's chain in 4 disconnected pieces and gave the rose jersey a 13.9%
+# soft-edge halo, against 1 piece and 1.5% here. isnet-general-use was worse
+# than both, breaking the jersey into 44 fragments.
+MODEL = "birefnet-general"
+
 _session = None
 
 
@@ -78,7 +84,7 @@ def _rembg_session():
     if _session is None:
         from rembg import new_session
 
-        _session = new_session("u2net")
+        _session = new_session(MODEL)
     return _session
 
 
