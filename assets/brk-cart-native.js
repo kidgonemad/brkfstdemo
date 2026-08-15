@@ -92,10 +92,32 @@
     '<circle cx="9" cy="19" r="1.4" fill="currentColor" stroke="none"/>' +
     '<circle cx="17" cy="19" r="1.4" fill="currentColor" stroke="none"/></svg>';
 
-  var fab = null, fabLabel = null, lastCount = null;
+  var fab = null, fabLabel = null, lastCount = null, lastSubtotal = 0;
 
   function buildFab() {
-    if (fab || /^\/(cart|checkout)/.test(location.pathname)) return;
+    if (fab || /^\/(cart|checkout|intro)/.test(location.pathname)) return;
+    /* The splash is its own page (and doubles as the 404 template), so it has
+       no nav and nothing to add to a cart. It renders as a full-bleed black
+       field, which the floating button was sitting on top of. Detected by its
+       markup rather than only by path, since the 404 serves it from any URL. */
+    if (document.querySelector(".field-intro")) return;
+
+    /* The home page ships with body.is-loading and shows a full-screen black
+       splash until js_main.js clears it. Building the button now would park it
+       on top of that splash, which is what you saw on first load. Wait for the
+       class to go, then build. */
+    if (document.body.classList.contains("is-loading")) {
+      if (!("MutationObserver" in window)) return;
+      var waiter = new MutationObserver(function () {
+        if (!document.body.classList.contains("is-loading")) {
+          waiter.disconnect();
+          buildFab();
+          paintFab(lastCount || 0, lastSubtotal || 0);
+        }
+      });
+      waiter.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+      return;
+    }
 
     var css = document.createElement("style");
     css.textContent =
@@ -108,6 +130,7 @@
       ".brk-cart-fab .t{position:absolute;width:1px;height:1px;overflow:hidden;" +
       "clip:rect(0 0 0 0);white-space:nowrap}" +
       ".brk-cart-fab svg{width:1.2rem;height:1.2rem;flex:none;display:block}" +
+      ".brk-cart-fab.is-away{opacity:0;pointer-events:none}" +
       "@media(prefers-reduced-motion:no-preference){" +
       ".brk-cart-fab{transition:transform .18s ease}" +
       ".brk-cart-fab.is-bumped{transform:scale(1.07)}}";
@@ -120,10 +143,26 @@
     fab.innerHTML = CART_ICON + '<span class="t">CART</span>';
     fabLabel = fab.querySelector(".t");
     document.body.appendChild(fab);
+
+    /* On a product page the button lands right on top of ADD TO CART, so a tap
+       aimed at the yellow button hits the cart link instead. Step out of the
+       way whenever ADD TO CART is on screen -- it is the better control at
+       that moment anyway -- and come back once it scrolls off. */
+    var addBtn = document.querySelector(".brk-add");
+    if (addBtn && "IntersectionObserver" in window) {
+      fab.classList.add("is-away");
+      new IntersectionObserver(function (entries) {
+        fab.classList.toggle("is-away", entries[0].isIntersecting);
+      }, { rootMargin: "0px 0px -8px 0px" }).observe(addBtn);
+    }
   }
 
   function paintFab(n, subtotal) {
-    if (!fab) return;
+    /* Remember the latest figures even when there is no button yet: on the
+       home page the build is deferred until the splash clears, and it needs
+       real values to paint with when it finally runs. */
+    lastSubtotal = subtotal;
+    if (!fab) { lastCount = n; return; }
     fabLabel.textContent = n > 0 ? "Cart, " + n + " items, " + money(subtotal) : "Cart";
     fab.setAttribute("aria-label",
       n > 0 ? "Cart, " + n + " item" + (n === 1 ? "" : "s") + ", view cart" : "View cart");
