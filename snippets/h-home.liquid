@@ -285,7 +285,11 @@
 }.text-style-tag-regular.text-style-link.no-wrap{
   white-space: nowrap;
 }.footer{
-  z-index: 995;
+  /* Was 995, which outranked the header (60) and the Directory panel (59):
+     scroll to the bottom, open Directory, and the footer's own links painted
+     straight through the open panel. Nothing else on this page goes above
+     100, so the footer only ever needed to clear ordinary content. */
+  z-index: 10;
   width: 100%;
   position: relative;
 }.padding-section-footer{
