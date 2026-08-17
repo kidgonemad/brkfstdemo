@@ -867,3 +867,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .FeaturedProducts-grid .fpc-eyebrow{opacity:.85}
   .FeaturedProducts-grid .fpc-rule{opacity:.45}
 }
+
+
+/* Directory: country + currency picker */
+.Directory-locale{grid-column:1/-1;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding-top:1.4rem;margin-top:.4rem;border-top:1px solid rgba(128,128,128,.35);color:#fff;}.Directory-locale form{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin:0;}.DirLocaleLabel{opacity:.5;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;}.DirLocale{font:inherit;font-size:1rem;padding:.45rem .7rem;cursor:pointer;max-width:100%;}.DirLocale option{color:#0A0A0A;background:#fff;}.DirLocaleGo{font:inherit;padding:.45rem .7rem;cursor:pointer;}

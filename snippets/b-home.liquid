@@ -48,6 +48,20 @@
         <a class="DirLink" href="/delivery-returns">Delivery &amp; Returns</a>
         
       </div>
+    {%- if localization.available_countries.size > 1 -%}
+      <div class="Directory-locale">
+        <span class="DirLocaleLabel">Ship to</span>
+        {%- form 'localization' -%}
+          <select class="DirLocale" name="country_code" aria-label="Country/region"
+                  onchange="this.form.submit()">
+            {%- for c in localization.available_countries -%}
+              <option value="{{ c.iso_code }}"{% if c.iso_code == localization.country.iso_code %} selected{% endif %}>{{ c.name }} &middot; {{ c.currency.iso_code }} {{ c.currency.symbol }}</option>
+            {%- endfor -%}
+          </select>
+          <noscript><button type="submit" class="DirLocaleGo">Update</button></noscript>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
     </div>
   </div>
 </header>
