@@ -34,7 +34,11 @@
         return String(o).toUpperCase() === String(size).toUpperCase();
       }) || String(v.title).toUpperCase() === String(size).toUpperCase();
     });
-    return (m || p.variants[0]).id;
+    /* Falling back to variants[0] here would put a different size in the cart
+       than the one the customer picked, silently. Better to fail the add and
+       say so than to sell them the wrong thing. */
+    if (!m) throw new Error('no variant matching "' + size + '" on ' + handle);
+    return m.id;
   }
 
   async function add(item) {           /* {handle, size, qty} */
@@ -84,7 +88,44 @@
          the page for text shaped like "(2 ITEMS)". */
       document.querySelectorAll("[sf-cart-count], [data-brk-cart-count]")
         .forEach(function (e) { e.textContent = n; });
+      /* The page's own handler optimistically bumps any "(N ITEMS)" label the
+         moment ADD TO CART is clicked, whether or not the add lands. Rewrite
+         those from the real cart so a failed add can't leave a count behind. */
+      [].slice.call(document.querySelectorAll("*")).forEach(function (el) {
+        if (el.children.length === 0 && /\(\d+\s*ITEMS?\)/i.test(el.textContent)) {
+          el.textContent = el.textContent.replace(
+            /\((\d+)(\s*ITEMS?)\)/i, function (m, a, b) { return "(" + n + b + ")"; });
+        }
+      });
     } catch (e) {}
+  }
+
+  /* ---------- tell the customer when an add fails ----------
+     The "ADDED ✓" flash is the page's own inline handler and it fires whether
+     or not Shopify accepted the item, so a product that isn't in the admin, a
+     sold-out variant or a dropped connection all used to read as success and
+     leave an empty cart. This overwrites that with the failure, and re-applies
+     once the inline handler's own 1.5s revert has run. ---------- */
+  /* Record the real labels up front. By the time an add fails the inline
+     handler has already swapped the button to "ADDED ✓", so reading it then
+     would restore that instead of "ADD TO CART". */
+  function rememberLabels() {
+    document.querySelectorAll(".brk-add").forEach(function (b) {
+      if (b.__label == null) b.__label = b.innerHTML;
+    });
+  }
+
+  function showAddError(btn) {
+    if (!btn || btn.__errT) return;
+    var original = btn.__label != null ? btn.__label : btn.innerHTML;
+    function paint() { btn.innerHTML = "COULDN'T ADD — TRY AGAIN"; }
+    paint();
+    var again = setTimeout(paint, 1600);          /* outlast the ADDED ✓ revert */
+    btn.__errT = setTimeout(function () {
+      clearTimeout(again);
+      btn.innerHTML = original;
+      btn.__errT = null;
+    }, 5000);
   }
 
   /* ---------- hook the existing ADD TO CART buttons ----------
@@ -118,11 +159,14 @@
     add({ handle: HANDLE, size: sel ? sel.textContent.trim() : null, qty: qty })
       .catch(function (err) {
         console.warn("[brk-cart] add failed:", err);
+        showAddError(t);
+        update();                                /* undo the optimistic count */
       });
   });
 
   window.BRKCart = { add: add, fetchCart: fetchCart, setQty: setQty,
                      update: update, count: count, money: money };
-  if (document.readyState !== "loading") update();
-  else document.addEventListener("DOMContentLoaded", update);
+  function boot() { rememberLabels(); update(); }
+  if (document.readyState !== "loading") boot();
+  else document.addEventListener("DOMContentLoaded", boot);
 })();
