@@ -95,7 +95,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .label-swap{display:block;overflow:clip;height:1.25em;line-height:1.25em}
 .label-swap>span{display:block;transition:transform .3s ease-out;white-space:nowrap}
 
-
 /* plus sign: two 1.5px bars; vertical bar rotates flat when open */
 .plus-sign{position:relative;width:.8rem;height:.8rem;display:block}
 .plus-sign>span{
@@ -661,7 +660,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* footer keeps its slide-up; the nav uses the scramble instead */
 .FooterLink:hover .label-swap>span{transform:translateY(-100%)}
 
-
 /* ---------- next-up placeholder ----------------------------------------
    The slot is COMING SOON / TBA and its image does not exist yet, so rather
    than render an empty box it reads as pending: a slow sweep across the
@@ -790,20 +788,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   bottom:1.6rem;left:1.15rem;right:1.15rem;
   display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;
 }
-.FeaturedProducts-grid .fpc-eyebrow{
-  display:flex;align-items:center;gap:.45rem;
-  font-family:var(--font-mono,'Helvetica Neue',Helvetica,Arial,sans-serif);
-  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
-  opacity:0;transform:translateY(8px);
-  transition:opacity .5s ease-out,transform .7s var(--ease-expr);
-  transition-delay:calc(var(--i,0)*90ms + 240ms);
-}
-.FeaturedProducts-grid .fpc-tick{
-  width:.4rem;height:.4rem;background:currentColor;display:block;
-}
-.FeaturedProducts-grid .FeaturedProductsCard.in-view .fpc-eyebrow{
-  opacity:.85;transform:none;
-}
 
 /* Title and description share the theme's line-mask, but are timed off
    the card so the group reads as one move. The mask is on the span, so
@@ -816,24 +800,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .FeaturedProducts-grid .FeaturedProductsCard.in-view .title .line{
   transform:translateY(0);transition-delay:calc(var(--i,0)*90ms + 300ms);
 }
-.FeaturedProducts-grid .FeaturedProductsCard.in-view .fpc-desc .line{
-  transform:translateY(0);transition-delay:calc(var(--i,0)*90ms + 400ms);
-}
-.FeaturedProducts-grid .fpc-desc{
-  margin:0;font-size:.92rem;line-height:1.3;font-weight:400;opacity:.9;
-  max-width:26ch;
-}
-
-/* Hairline closes the block, drawn rather than faded. */
-.FeaturedProducts-grid .fpc-rule{
-  display:block;height:1px;width:100%;max-width:11rem;
-  background:currentColor;opacity:.45;
-  transform:scaleX(0);transform-origin:left center;
-  transition:transform .85s var(--ease-expr);
-  transition-delay:calc(var(--i,0)*90ms + 480ms);
-  margin-top:.35rem;
-}
-.FeaturedProducts-grid .FeaturedProductsCard.in-view .fpc-rule{transform:scaleX(1)}
 
 /* The arrow rides in with the hairline. */
 .FeaturedProducts-grid .icons{
@@ -845,7 +811,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .FeaturedProducts-grid .FeaturedProductsCard:hover .icons{transform:translateX(4px)}
 
 @media (max-width:700px){
-  .FeaturedProducts-grid .fpc-desc{font-size:.85rem;max-width:none}
   .FeaturedProducts-grid .content-wrapper{bottom:1.25rem}
 }
 
@@ -864,10 +829,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .FeaturedProducts-grid .icons{
     transform:none!important;opacity:1;transition:none!important;
   }
-  .FeaturedProducts-grid .fpc-eyebrow{opacity:.85}
-  .FeaturedProducts-grid .fpc-rule{opacity:.45}
 }
-
 
 /* Directory: country + currency picker */
 .Directory-locale{grid-column:1/-1;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding-top:1.4rem;margin-top:.4rem;border-top:1px solid rgba(128,128,128,.35);color:#fff;}.Directory-locale form{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin:0;}.DirLocaleLabel{opacity:.5;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;}.DirLocale{font:inherit;font-size:1rem;padding:.45rem .7rem;cursor:pointer;max-width:100%;}.DirLocale option{color:#0A0A0A;background:#fff;}.DirLocaleGo{font:inherit;padding:.45rem .7rem;cursor:pointer;}
