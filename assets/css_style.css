@@ -471,6 +471,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .Events-media .brk-mark.is-tr{top:calc(var(--f) - 10px);right:calc(var(--f) - 10px);border-top-width:2px;border-right-width:2px;}
 .Events-media .brk-mark.is-bl{bottom:calc(var(--f) - 10px);left:calc(var(--f) - 10px);border-bottom-width:2px;border-left-width:2px;}
 .Events-media .brk-mark.is-br{bottom:calc(var(--f) - 10px);right:calc(var(--f) - 10px);border-bottom-width:2px;border-right-width:2px;}
+/* video sits inset inside the black box, so the box reads as a frame.
+   Replaced elements ignore right/bottom offsets with auto sizing, so the
+   inset must be expressed as explicit width/height, not four offsets. */
+.Events-media video{
+  position:absolute;top:var(--f);left:var(--f);
+  width:calc(100% - (var(--f) * 2));height:calc(100% - (var(--f) * 2));
+  object-fit:cover;
+  opacity:1;transition:opacity .25s ease;
+}
 .Events-media.is-playing video{opacity:1}
 
 /* ---- Scroll reveal: "viewfinder lock-on" -------------------------------
@@ -484,6 +493,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    Reads like a camera acquiring the shot, matching the reticle ticks the
    rest of the site uses. */
 .Events-media[data-reveal]{transform:none !important;transition:opacity .45s ease;}
+
+.Events-media video{
+  clip-path:inset(15% 21%);
+  transform:scale(1.07);
+  opacity:0;
+  transition:clip-path 1s cubic-bezier(.16,1,.3,1) .28s,
+             transform 1.15s cubic-bezier(.16,1,.3,1) .28s,
+             opacity .4s ease .28s;
+}
 .Events-media.in-view video{clip-path:inset(0);transform:none;opacity:1;}
 
 .Events-media .brk-mark{
@@ -500,6 +518,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .Events-media.in-view .brk-mark{opacity:1;transform:translate(0,0);}
 
 @media (prefers-reduced-motion:reduce){
+  .Events-media video{clip-path:none;transform:none;opacity:1;transition:none;}
   .Events-media .brk-mark{opacity:1;transform:none !important;transition:none;}
 }
 
